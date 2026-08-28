@@ -24,6 +24,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Migration;
+using CompanionStudio.Core.Serialization;
 
 namespace CompanionStudio.Tests;
 
@@ -829,5 +830,85 @@ public class MigrationManagerTests
         Assert.Equal(
             before,
             profile.Version.LastMigration);
+    }
+}
+
+public class CompanionSerializerTests
+{
+    [Fact]
+    public void Serialize_ShouldCreateJson()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var serializer =
+            new CompanionSerializer();
+
+
+        var json =
+            serializer.Serialize(profile);
+
+
+        Assert.Contains(
+            "Lilith",
+            json);
+    }
+
+
+    [Fact]
+    public void Deserialize_ShouldRestoreCompanion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var serializer =
+            new CompanionSerializer();
+
+
+        var json =
+            serializer.Serialize(profile);
+
+
+        var result =
+            serializer.Deserialize(json);
+
+
+        Assert.NotNull(
+            result);
+
+
+        Assert.Equal(
+            "Lilith",
+            result!.Identity.Name);
+
+
+        Assert.NotNull(
+            result.State);
+
+
+        Assert.NotNull(
+            result.Version);
     }
 }
