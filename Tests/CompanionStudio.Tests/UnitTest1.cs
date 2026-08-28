@@ -1,18 +1,24 @@
 ﻿using CompanionStudio.Core.Engine;
 using CompanionStudio.Core.Factory;
+using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Services;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Repository;
+using CompanionStudio.Core.Security;
 using CompanionStudio.Data.Storage;
 
 namespace CompanionStudio.Tests;
@@ -571,5 +577,57 @@ public class CompanionRepositoryTests
         Assert.Equal(
             "Lilith",
             result!.Identity.Name);
+    }
+}
+
+public class CompanionManagerTests
+{
+    [Fact]
+    public void Create_ShouldSaveAndLoadCompanion()
+    {
+        var path = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid() + ".json");
+
+
+        var storage =
+            new CompanionProfileFileStorage(path);
+
+
+        var repository =
+            new CompanionRepository(storage);
+
+
+        var manager =
+            new CompanionManager(
+                new CompanionFactory(),
+                repository,
+                new ProfileIntegrityService());
+
+
+        var companion =
+            manager.Create(
+                "Lilith",
+                "Asistente personal",
+                "Cálido",
+                70,
+                90,
+                40);
+
+
+        var loaded =
+            manager.Load();
+
+
+        Assert.NotNull(loaded);
+
+
+        Assert.Equal(
+            "Lilith",
+            loaded!.Identity.Name);
+
+
+        Assert.True(
+            manager.Verify(companion));
     }
 }
