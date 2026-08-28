@@ -2,6 +2,7 @@
 using CompanionStudio.Core.Backup;
 using CompanionStudio.Core.Backup;
 using CompanionStudio.Core.Commands;
+using CompanionStudio.Core.Commands;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Engine;
@@ -20,11 +21,13 @@ using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Migration;
+using CompanionStudio.Core.Modules;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Plugins;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
@@ -46,8 +49,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Commands;
-using CompanionStudio.Core.Modules;
+using CompanionStudio.Core.Plugins;
 
 namespace CompanionStudio.Tests;
 
@@ -2018,5 +2020,73 @@ public class CompanionModuleSystemTests
 
         Assert.False(
             module.Enabled);
+    }
+}
+
+public class CompanionPluginSystemTests
+{
+    [Fact]
+    public void Register_ShouldAddPlugin()
+    {
+        var system =
+            new CompanionPluginSystem();
+
+
+        var plugin =
+            new CompanionPlugin(
+                "local-ai",
+                "Local AI Engine");
+
+
+        system.Register(plugin);
+
+
+        var result =
+            system.Find("local-ai");
+
+
+        Assert.NotNull(result);
+
+
+        Assert.Equal(
+            "Local AI Engine",
+            result!.Name);
+    }
+
+
+    [Fact]
+    public void Load_ShouldActivatePlugin()
+    {
+        var plugin =
+            new CompanionPlugin(
+                "voice",
+                "Voice Plugin");
+
+
+        plugin.Load();
+
+
+        Assert.True(
+            plugin.Loaded);
+    }
+
+
+    [Fact]
+    public void Unload_ShouldDeactivatePlugin()
+    {
+        var plugin =
+            new CompanionPlugin(
+                "vision",
+                "Vision Plugin");
+
+
+        plugin.Load();
+
+
+        plugin.Unload();
+
+
+        Assert.False(
+            plugin.Loaded);
     }
 }
