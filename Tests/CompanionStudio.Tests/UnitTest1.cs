@@ -12,6 +12,8 @@ using CompanionStudio.Core.Services;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Factory;
+using CompanionStudio.Core.Repository;
+using CompanionStudio.Data.Storage;
 
 namespace CompanionStudio.Tests;
 
@@ -520,5 +522,54 @@ public class CompanionFactoryTests
 
         Assert.NotEmpty(
             companion.IntegrityHash);
+    }
+}
+
+public class CompanionRepositoryTests
+{
+    [Fact]
+    public void SaveAndLoad_ShouldPersistCompanion()
+    {
+        var path = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid() + ".json");
+
+
+        var storage =
+            new CompanionProfileFileStorage(path);
+
+
+        var repository =
+            new CompanionRepository(storage);
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith",
+                    Tone = "Cálido"
+                });
+
+
+        repository.Save(profile);
+
+
+        var result =
+            repository.Load();
+
+
+        Assert.NotNull(result);
+
+
+        Assert.Equal(
+            "Lilith",
+            result!.Identity.Name);
     }
 }
