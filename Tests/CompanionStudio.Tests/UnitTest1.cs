@@ -1,4 +1,6 @@
-﻿using CompanionStudio.Core.Configuration;
+﻿using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Configuration;
+using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Engine;
 using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Factory;
@@ -32,13 +34,13 @@ using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Serialization;
 using CompanionStudio.Core.Services;
 using CompanionStudio.Core.State;
+using CompanionStudio.Core.Storage;
 using CompanionStudio.Core.Version;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Configuration;
-using CompanionStudio.Core.Storage;
+using CompanionStudio.Core.Backup;
 
 namespace CompanionStudio.Tests;
 
@@ -1592,5 +1594,92 @@ public class CompanionStorageManagerTests
 
 
         storage.Delete(path);
+    }
+}
+
+public class CompanionBackupManagerTests
+{
+    [Fact]
+    public void CreateBackup_ShouldCreateFile()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var backup =
+            new CompanionBackupManager();
+
+
+        var path =
+            "backup_test.companion";
+
+
+        backup.CreateBackup(
+            package,
+            path);
+
+
+        Assert.True(
+            backup.Exists(path));
+
+
+        File.Delete(path);
+    }
+
+
+    [Fact]
+    public void RestoreBackup_ShouldRecoverPackage()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var backup =
+            new CompanionBackupManager();
+
+
+        var path =
+            "backup_test.companion";
+
+
+        backup.CreateBackup(
+            package,
+            path);
+
+
+        var restored =
+            backup.RestoreBackup(path);
+
+
+        Assert.NotNull(
+            restored);
+
+
+        Assert.Equal(
+            "Lilith",
+            restored!.Profile.Identity.Name);
+
+
+        File.Delete(path);
     }
 }
