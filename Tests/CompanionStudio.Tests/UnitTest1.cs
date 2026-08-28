@@ -20,6 +20,7 @@ using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.State;
 
 namespace CompanionStudio.Tests;
 
@@ -629,5 +630,50 @@ public class CompanionManagerTests
 
         Assert.True(
             manager.Verify(companion));
+    }
+}
+
+public class CompanionStateTests
+{
+    [Fact]
+    public void State_ShouldInitializeCorrectly()
+    {
+        var state = new CompanionState
+        {
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow,
+            LastLoaded = DateTime.UtcNow,
+            Version = "1.0",
+            Status = "Active"
+        };
+
+
+        Assert.True(
+            state.IsActive);
+
+
+        Assert.Equal(
+            "1.0",
+            state.Version);
+
+
+        Assert.Equal(
+            "Active",
+            state.Status);
+    }
+
+
+    [Fact]
+    public void State_ShouldUpdateStatus()
+    {
+        var state = new CompanionState();
+
+
+        state.Status = "Running";
+
+
+        Assert.Equal(
+            "Running",
+            state.Status);
     }
 }
