@@ -38,6 +38,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Configuration;
+using CompanionStudio.Core.Storage;
 
 namespace CompanionStudio.Tests;
 
@@ -1504,5 +1505,92 @@ public class CompanionConfigurationTests
 
         Assert.False(
             config.AutoSave);
+    }
+}
+
+public class CompanionStorageManagerTests
+{
+    [Fact]
+    public void Save_ShouldCreateCompanionFile()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var storage =
+            new CompanionStorageManager();
+
+
+        var path =
+            "test.companion";
+
+
+        storage.Save(
+            package,
+            path);
+
+
+        Assert.True(
+            File.Exists(path));
+
+
+        storage.Delete(path);
+    }
+
+
+    [Fact]
+    public void Load_ShouldRestorePackage()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var storage =
+            new CompanionStorageManager();
+
+
+        var path =
+            "test.companion";
+
+
+        storage.Save(
+            package,
+            path);
+
+
+        var result =
+            storage.Load(path);
+
+
+        Assert.NotNull(
+            result);
+
+
+        Assert.Equal(
+            "Lilith",
+            result!.Profile.Identity.Name);
+
+
+        storage.Delete(path);
     }
 }
