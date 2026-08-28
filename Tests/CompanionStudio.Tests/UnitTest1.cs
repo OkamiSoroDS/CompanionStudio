@@ -1523,6 +1523,46 @@ public class CompanionConfigurationTests
         Assert.False(
             config.AutoSave);
     }
+
+    [Fact]
+    public void Manager_ShouldUpdateConfiguration()
+    {
+        var manager =
+            new CompanionConfigurationManager();
+
+
+        var newConfig =
+            new CompanionConfiguration
+            {
+                StoragePath = "LilithData",
+                DefaultLanguage = "es",
+                AutoSave = false,
+                LoggingEnabled = true,
+                Version = "2.0"
+            };
+
+
+        manager.Update(
+            newConfig);
+
+
+        var result =
+            manager.Get();
+
+
+        Assert.Equal(
+            "LilithData",
+            result.StoragePath);
+
+
+        Assert.Equal(
+            "2.0",
+            result.Version);
+
+
+        Assert.False(
+            result.AutoSave);
+    }
 }
 
 public class CompanionStorageManagerTests
