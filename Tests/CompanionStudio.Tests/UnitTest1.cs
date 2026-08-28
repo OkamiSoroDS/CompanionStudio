@@ -1,21 +1,32 @@
-﻿using CompanionStudio.Core.Services;
+﻿using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.Identity;
 
 namespace CompanionStudio.Tests;
 
-public class IdentityServiceTests
+public class IdentityFileStorageTests
 {
     [Fact]
-    public void Create_ShouldReturnNewIdentity()
+    public void Save_ShouldCreateIdentityFile()
     {
-        var service = new IdentityService();
+        var storage = new IdentityFileStorage();
 
-        var identity = service.Create(
-            "Lilith",
-            "Asistente personal"
-        );
+        var identity = new IdentityModel
+        {
+            Id = "CS-000001",
+            Name = "Lilith",
+            Description = "Asistente personal",
+            IsActive = true
+        };
 
-        Assert.NotNull(identity);
-        Assert.Equal("Lilith", identity.Name);
-        Assert.True(identity.IsActive);
+        storage.Save(
+            new List<IdentityModel>
+            {
+                identity
+            });
+
+        var result = storage.Load();
+
+        Assert.Single(result);
+        Assert.Equal("Lilith", result.First().Name);
     }
 }

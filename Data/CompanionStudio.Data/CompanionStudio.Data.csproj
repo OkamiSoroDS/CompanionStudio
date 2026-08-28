@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\Core\CompanionStudio.Core\CompanionStudio.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 </Project>
