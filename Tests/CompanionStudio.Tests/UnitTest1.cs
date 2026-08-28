@@ -1,15 +1,17 @@
-﻿using CompanionStudio.Data.Storage;
+﻿using CompanionStudio.Core.Engine;
+using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Identity;
-using CompanionStudio.Core.Services;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
-using CompanionStudio.Core.Security;
-using CompanionStudio.Core.Engine;
+using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Security;
-using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Security;
+using CompanionStudio.Core.Services;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Profile;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.Factory;
 
 namespace CompanionStudio.Tests;
 
@@ -482,5 +484,41 @@ public class CompanionProfileStorageTests
         Assert.Equal(
             "Lilith",
             result!.Identity.Name);
+    }
+}
+
+public class CompanionFactoryTests
+{
+    [Fact]
+    public void Create_ShouldGenerateCompleteCompanion()
+    {
+        var factory = new CompanionFactory();
+
+
+        var companion =
+            factory.Create(
+                "Lilith",
+                "Asistente personal",
+                "Cálido",
+                70,
+                90,
+                40);
+
+
+        Assert.NotNull(companion);
+
+
+        Assert.Equal(
+            "Lilith",
+            companion.Identity.Name);
+
+
+        Assert.Equal(
+            "Lilith",
+            companion.Personality.Name);
+
+
+        Assert.NotEmpty(
+            companion.IntegrityHash);
     }
 }
