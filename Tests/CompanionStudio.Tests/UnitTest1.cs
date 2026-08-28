@@ -58,6 +58,7 @@ using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Logging;
 using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Storage;
+using CompanionStudio.Core.Backup;
 
 namespace CompanionStudio.Tests;
 
@@ -2559,5 +2560,84 @@ public class CompanionStorageProviderTests
         Assert.False(
             storage.Exists(
                 "profile"));
+    }
+}
+
+public class CompanionBackupSystemTests
+{
+    [Fact]
+    public void Create_ShouldAddBackup()
+    {
+        var system =
+            new CompanionBackupSystem();
+
+
+        var backup =
+            new CompanionBackup(
+                "lilith-v1");
+
+
+        system.Create(
+            backup);
+
+
+        var result =
+            system.Find(
+                "lilith-v1");
+
+
+        Assert.NotNull(
+            result);
+
+
+        Assert.Equal(
+            "lilith-v1",
+            result!.Id);
+    }
+
+
+    [Fact]
+    public void Restore_ShouldMarkBackupRestored()
+    {
+        var system =
+            new CompanionBackupSystem();
+
+
+        var backup =
+            new CompanionBackup(
+                "backup-test");
+
+
+        system.Create(
+            backup);
+
+
+        system.Restore(
+            "backup-test");
+
+
+        Assert.True(
+            backup.Restored);
+    }
+
+
+    [Fact]
+    public void GetAll_ShouldReturnBackups()
+    {
+        var system =
+            new CompanionBackupSystem();
+
+
+        system.Create(
+            new CompanionBackup(
+                "backup-1"));
+
+
+        var backups =
+            system.GetAll();
+
+
+        Assert.Single(
+            backups);
     }
 }
