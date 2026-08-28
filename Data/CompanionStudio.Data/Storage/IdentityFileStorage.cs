@@ -22,9 +22,16 @@ public class IdentityFileStorage : IIdentityStorage
 
         Directory.CreateDirectory("Files");
 
-        File.WriteAllText(
+        using (var stream = new FileStream(
             filePath,
-            json);
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.Read))
+        {
+            using var writer = new StreamWriter(stream);
+
+            writer.Write(json);
+        }
     }
 
     public IEnumerable<IdentityModel> Load()
@@ -32,7 +39,18 @@ public class IdentityFileStorage : IIdentityStorage
         if (!File.Exists(filePath))
             return new List<IdentityModel>();
 
-        var json = File.ReadAllText(filePath);
+        string json;
+
+        using (var stream = new FileStream(
+            filePath,
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite))
+        {
+            using var reader = new StreamReader(stream);
+
+            json = reader.ReadToEnd();
+        }
 
         return JsonSerializer.Deserialize<List<IdentityModel>>(json)
                ?? new List<IdentityModel>();
