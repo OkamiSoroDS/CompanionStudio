@@ -1,4 +1,5 @@
 ﻿using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Backup;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Engine;
@@ -6,8 +7,10 @@ using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Factory;
+using CompanionStudio.Core.Health;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Lifecycle;
 using CompanionStudio.Core.Logging;
 using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Manager;
@@ -40,8 +43,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Backup;
-using CompanionStudio.Core.Health;
+using CompanionStudio.Core.Lifecycle;
 
 namespace CompanionStudio.Tests;
 
@@ -1740,5 +1742,80 @@ public class CompanionHealthMonitorTests
 
         Assert.False(
             monitor.IsHealthy(profile));
+    }
+}
+
+public class CompanionLifecycleManagerTests
+{
+    [Fact]
+    public void Start_ShouldActivateRegisteredCompanion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var manager =
+            new CompanionLifecycleManager();
+
+
+        manager.Register(profile);
+
+
+        var result =
+            manager.Start(
+                "CS-000001");
+
+
+        Assert.True(result);
+
+
+        Assert.True(
+            manager.Runtime.IsRunning);
+
+
+        Assert.NotNull(
+            manager.Runtime.ActiveCompanion);
+    }
+
+
+    [Fact]
+    public void Stop_ShouldDeactivateCompanion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var manager =
+            new CompanionLifecycleManager();
+
+
+        manager.Register(profile);
+
+
+        manager.Start(
+            "CS-000001");
+
+
+        manager.Stop();
+
+
+        Assert.False(
+            manager.Runtime.IsRunning);
+
+
+        Assert.Null(
+            manager.Runtime.ActiveCompanion);
     }
 }
