@@ -6,6 +6,8 @@ using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Engine;
 using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Security;
+using CompanionStudio.Core.Profile;
 
 namespace CompanionStudio.Tests;
 
@@ -341,5 +343,98 @@ public class CompanionProfileTests
         Assert.Equal(
             "Primer recuerdo",
             profile.Memories.First().Content);
+    }
+}
+
+public class ProfileIntegrityTests
+{
+    [Fact]
+    public void GenerateHash_ShouldCreateIntegrityHash()
+    {
+        var profile = new CompanionProfile(
+            new IdentityModel
+            {
+                Id = "CS-000001",
+                Name = "Lilith"
+            },
+            new PersonalityModel
+            {
+                Id = "PER-000001",
+                Name = "Lilith"
+            });
+
+
+        var service = new ProfileIntegrityService();
+
+
+        var hash = service.GenerateHash(profile);
+
+
+        Assert.NotEmpty(hash);
+
+        Assert.Equal(
+            hash,
+            profile.IntegrityHash);
+    }
+
+
+    [Fact]
+    public void Verify_ShouldDetectOriginalProfile()
+    {
+        var profile = new CompanionProfile(
+            new IdentityModel
+            {
+                Id = "CS-000001",
+                Name = "Lilith"
+            },
+            new PersonalityModel
+            {
+                Id = "PER-000001",
+                Name = "Lilith"
+            });
+
+
+        var service = new ProfileIntegrityService();
+
+
+        service.GenerateHash(profile);
+
+
+        var result = service.Verify(profile);
+
+
+        Assert.True(result);
+    }
+
+
+    [Fact]
+    public void Verify_ShouldDetectModifiedProfile()
+    {
+        var profile = new CompanionProfile(
+            new IdentityModel
+            {
+                Id = "CS-000001",
+                Name = "Lilith"
+            },
+            new PersonalityModel
+            {
+                Id = "PER-000001",
+                Name = "Lilith"
+            });
+
+
+        var service = new ProfileIntegrityService();
+
+
+        service.GenerateHash(profile);
+
+
+        profile.Identity.Name = "Lilith_Modificada";
+
+
+        var result = service.Verify(profile);
+
+
+        Assert.False(result);
     }
 }
