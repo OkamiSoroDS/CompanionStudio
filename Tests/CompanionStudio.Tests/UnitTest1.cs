@@ -59,6 +59,10 @@ using CompanionStudio.Core.Logging;
 using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Storage;
 using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Personality;
 
 namespace CompanionStudio.Tests;
 

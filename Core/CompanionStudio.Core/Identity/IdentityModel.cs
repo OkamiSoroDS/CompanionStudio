@@ -13,4 +13,6 @@ public class IdentityModel
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public bool IsActive { get; set; } = true;
+
+    public string IntegrityHash { get; set; } = string.Empty;
 }

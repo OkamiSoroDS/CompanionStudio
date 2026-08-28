@@ -10,6 +10,8 @@ public class CompanionPackage
 
     public DateTime CreatedAt { get; }
 
+    public bool Imported { get; private set; }
+
 
     public CompanionPackage(
         CompanionProfile profile)
@@ -19,5 +21,13 @@ public class CompanionPackage
         PackageVersion = "1.0";
 
         CreatedAt = DateTime.UtcNow;
+
+        Imported = false;
+    }
+
+
+    public void MarkImported()
+    {
+        Imported = true;
     }
 }

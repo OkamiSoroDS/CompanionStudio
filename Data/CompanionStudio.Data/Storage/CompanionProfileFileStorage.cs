@@ -59,6 +59,10 @@ public class CompanionProfileFileStorage : IProfileStorage
 
 
         return JsonSerializer.Deserialize<CompanionProfile>(
-            json);
+    json,
+    new JsonSerializerOptions
+    {
+        WriteIndented = true
+    });
     }
 }
