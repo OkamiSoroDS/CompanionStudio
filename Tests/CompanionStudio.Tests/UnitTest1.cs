@@ -50,6 +50,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Plugins;
+using CompanionStudio.Core.Permissions;
 
 namespace CompanionStudio.Tests;
 
@@ -2088,5 +2089,82 @@ public class CompanionPluginSystemTests
 
         Assert.False(
             plugin.Loaded);
+    }
+}
+
+public class CompanionPermissionSystemTests
+{
+    [Fact]
+    public void Grant_ShouldAddPermission()
+    {
+        var system =
+            new CompanionPermissionSystem();
+
+
+        var permission =
+            new CompanionPermission(
+                "Microphone.Access",
+                "Allow voice input");
+
+
+        system.Grant(permission);
+
+
+        Assert.True(
+            system.HasPermission(
+                "Microphone.Access"));
+    }
+
+
+    [Fact]
+    public void Revoke_ShouldRemovePermission()
+    {
+        var system =
+            new CompanionPermissionSystem();
+
+
+        var permission =
+            new CompanionPermission(
+                "Memory.Write",
+                "Allow memory changes");
+
+
+        system.Grant(permission);
+
+
+        system.Revoke(
+            "Memory.Write");
+
+
+        Assert.False(
+            system.HasPermission(
+                "Memory.Write"));
+    }
+
+
+    [Fact]
+    public void GetAll_ShouldReturnPermissions()
+    {
+        var system =
+            new CompanionPermissionSystem();
+
+
+        system.Grant(
+            new CompanionPermission(
+                "Model.Execute",
+                "Allow AI execution"));
+
+
+        var permissions =
+            system.GetAll();
+
+
+        Assert.Single(
+            permissions);
+
+
+        Assert.Equal(
+            "Model.Execute",
+            permissions.First().Id);
     }
 }
