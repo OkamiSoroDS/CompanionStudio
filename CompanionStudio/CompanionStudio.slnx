@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="../Core/CompanionStudio.Core/CompanionStudio.Core.csproj" />
+  <Project Path="../Data/CompanionStudio.Data/CompanionStudio.Data.csproj" />
   <Project Path="../Tests/CompanionStudio.Tests/CompanionStudio.Tests.csproj" />
 </Solution>
