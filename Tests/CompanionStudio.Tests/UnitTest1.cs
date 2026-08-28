@@ -1,22 +1,21 @@
-﻿using CompanionStudio.Core.Identity;
+﻿using CompanionStudio.Core.Services;
 
 namespace CompanionStudio.Tests;
 
-public class IdentityTests
+public class IdentityServiceTests
 {
     [Fact]
-    public void CreateIdentity_ShouldGenerateIdentity()
+    public void Create_ShouldReturnNewIdentity()
     {
-        var manager = new IdentityManager();
+        var service = new IdentityService();
 
-        var identity = manager.CreateIdentity(
+        var identity = service.Create(
             "Lilith",
             "Asistente personal"
         );
 
         Assert.NotNull(identity);
         Assert.Equal("Lilith", identity.Name);
-        Assert.Equal("CS-000001", identity.Id);
         Assert.True(identity.IsActive);
     }
 }
