@@ -533,6 +533,26 @@ public class CompanionFactoryTests
 
         Assert.NotEmpty(
             companion.IntegrityHash);
+        Assert.NotEmpty(
+    companion.IntegrityHash);
+
+
+        Assert.NotNull(
+            companion.State);
+
+
+        Assert.True(
+            companion.State.IsActive);
+
+
+        Assert.Equal(
+            "1.0",
+            companion.State.Version);
+
+
+        Assert.Equal(
+            "Created",
+            companion.State.Status);
     }
 }
 
@@ -681,4 +701,3 @@ public class CompanionStateTests
             state.Status);
     }
 }
-
