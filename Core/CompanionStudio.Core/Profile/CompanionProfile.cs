@@ -2,6 +2,7 @@
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.State;
+using CompanionStudio.Core.Version;
 
 namespace CompanionStudio.Core.Profile;
 
@@ -17,6 +18,8 @@ public class CompanionProfile
 
     public CompanionState State { get; }
 
+    public CompanionVersion Version { get; }
+    
     public CompanionProfile(
     IdentityModel identity,
     PersonalityModel personality)
@@ -33,6 +36,13 @@ public class CompanionProfile
             LastLoaded = DateTime.UtcNow,
             Version = "1.0",
             Status = "Created"
+        };
+
+        Version = new CompanionVersion
+        {
+            CreatedVersion = "1.0",
+            CurrentVersion = "1.0",
+            CreatedAt = DateTime.UtcNow
         };
     }
 

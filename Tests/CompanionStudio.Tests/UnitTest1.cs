@@ -21,6 +21,7 @@ using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.State;
+using CompanionStudio.Core.Version;
 
 namespace CompanionStudio.Tests;
 
@@ -711,5 +712,44 @@ public class CompanionStateTests
         Assert.Equal(
             "Running",
             state.Status);
+    }
+}
+
+public class CompanionVersionTests
+{
+    [Fact]
+    public void Version_ShouldInitializeCorrectly()
+    {
+        var version =
+            new CompanionVersion();
+
+
+        Assert.Equal(
+            "1.0",
+            version.CreatedVersion);
+
+
+        Assert.Equal(
+            "1.0",
+            version.CurrentVersion);
+    }
+
+
+    [Fact]
+    public void Profile_ShouldContainVersion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel(),
+                new PersonalityModel());
+
+
+        Assert.NotNull(
+            profile.Version);
+
+
+        Assert.Equal(
+            "1.0",
+            profile.Version.CurrentVersion);
     }
 }
