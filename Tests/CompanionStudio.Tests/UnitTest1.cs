@@ -300,34 +300,38 @@ public class CompanionEngineTests
 public class CompanionProfileTests
 {
     [Fact]
-    public void Profile_ShouldContainIdentityAndPersonality()
+    public void Profile_ShouldInitializeState()
     {
-        var identity = new IdentityModel
-        {
-            Id = "CS-000001",
-            Name = "Lilith"
-        };
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
 
-        var personality = new PersonalityModel
-        {
-            Id = "PER-000001",
-            Name = "Lilith",
-            Tone = "Cálido"
-        };
 
-        var profile = new CompanionProfile(
-            identity,
-            personality);
+        Assert.NotNull(
+            profile.State);
+
+
+        Assert.True(
+            profile.State.IsActive);
 
 
         Assert.Equal(
-            "Lilith",
-            profile.Identity.Name);
+            "1.0",
+            profile.State.Version);
 
 
         Assert.Equal(
-            "Lilith",
-            profile.Personality.Name);
+            "Created",
+            profile.State.Status);
     }
 
 
@@ -677,3 +681,4 @@ public class CompanionStateTests
             state.Status);
     }
 }
+
