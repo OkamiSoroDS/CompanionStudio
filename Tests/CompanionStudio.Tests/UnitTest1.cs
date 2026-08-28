@@ -29,6 +29,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Security;
+using CompanionStudio.Core.Registry;
 
 namespace CompanionStudio.Tests;
 
@@ -1136,5 +1137,109 @@ public class IntegrityPackageVerifierTests
 
 
         Assert.True(result);
+    }
+}
+
+public class CompanionRegistryTests
+{
+    [Fact]
+    public void Register_ShouldAddCompanion()
+    {
+        var registry =
+            new CompanionRegistry();
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        registry.Register(profile);
+
+
+        var result =
+            registry.Find("CS-000001");
+
+
+        Assert.NotNull(result);
+
+
+        Assert.Equal(
+            "Lilith",
+            result!.Identity.Name);
+    }
+
+
+    [Fact]
+    public void List_ShouldReturnAllCompanions()
+    {
+        var registry =
+            new CompanionRegistry();
+
+
+        registry.Register(
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel()));
+
+
+        registry.Register(
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000002",
+                    Name = "Atlas"
+                },
+                new PersonalityModel()));
+
+
+        var result =
+            registry.List();
+
+
+        Assert.Equal(
+            2,
+            result.Count);
+    }
+
+
+    [Fact]
+    public void Remove_ShouldDeleteCompanion()
+    {
+        var registry =
+            new CompanionRegistry();
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        registry.Register(profile);
+
+
+        var removed =
+            registry.Remove("CS-000001");
+
+
+        Assert.True(removed);
+
+
+        Assert.Null(
+            registry.Find("CS-000001"));
     }
 }
