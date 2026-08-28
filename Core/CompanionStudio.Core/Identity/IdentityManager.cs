@@ -1,4 +1,4 @@
-﻿namespace CompanionStudio.Core
+﻿namespace CompanionStudio.Core.Identity
 {
     public class IdentityManager
     {
