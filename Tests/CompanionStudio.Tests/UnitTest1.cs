@@ -8,6 +8,8 @@ using CompanionStudio.Core.Engine;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Profile;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.Profile;
 
 namespace CompanionStudio.Tests;
 
@@ -436,5 +438,49 @@ public class ProfileIntegrityTests
 
 
         Assert.False(result);
+    }
+}
+
+public class CompanionProfileStorageTests
+{
+    [Fact]
+    public void Save_ShouldCreateCompanionFile()
+    {
+        var path = Path.Combine(
+            Path.GetTempPath(),
+            Guid.NewGuid() + ".json");
+
+
+        var storage =
+            new CompanionProfileFileStorage(path);
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith",
+                    Tone = "Cálido"
+                });
+
+
+        storage.Save(profile);
+
+
+        var result =
+            storage.Load();
+
+
+        Assert.NotNull(result);
+
+        Assert.Equal(
+            "Lilith",
+            result!.Identity.Name);
     }
 }
