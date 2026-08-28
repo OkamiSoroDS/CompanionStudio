@@ -54,6 +54,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Scheduler;
 using CompanionStudio.Core.StateMachine;
+using CompanionStudio.Core.Events;
 
 namespace CompanionStudio.Tests;
 
@@ -2301,5 +2302,70 @@ public class CompanionStateMachineTests
         Assert.False(
             machine.Is(
                 CompanionStateType.Sleeping));
+    }
+}
+
+public class CompanionEventBusTests
+{
+    [Fact]
+    public void Publish_ShouldStoreEvent()
+    {
+        var bus =
+            new CompanionEventBus();
+
+
+        var eventData =
+            new CompanionEvent(
+                "CompanionStarted");
+
+
+        bus.Publish(eventData);
+
+
+        var events =
+            bus.GetEvents();
+
+
+        Assert.Single(
+            events);
+
+
+        Assert.Equal(
+            "CompanionStarted",
+            events[0].Name);
+    }
+
+
+    [Fact]
+    public void Clear_ShouldRemoveEvents()
+    {
+        var bus =
+            new CompanionEventBus();
+
+
+        bus.Publish(
+            new CompanionEvent(
+                "StateChanged"));
+
+
+        bus.Clear();
+
+
+        Assert.Empty(
+            bus.GetEvents());
+    }
+
+
+    [Fact]
+    public void Event_ShouldHaveCreationDate()
+    {
+        var eventData =
+            new CompanionEvent(
+                "MemoryCreated");
+
+
+        Assert.NotEqual(
+            default,
+            eventData.CreatedAt);
     }
 }
