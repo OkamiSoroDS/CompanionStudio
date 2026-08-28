@@ -56,6 +56,8 @@ using CompanionStudio.Core.Scheduler;
 using CompanionStudio.Core.StateMachine;
 using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Logging;
+using CompanionStudio.Core.Migration;
+using CompanionStudio.Core.Storage;
 
 namespace CompanionStudio.Tests;
 
@@ -2408,5 +2410,154 @@ public class CompanionEventBusTests
         Assert.NotEqual(
             default,
             eventData.CreatedAt);
+    }
+}
+
+public class CompanionMigrationTests
+{
+    [Fact]
+    public void Register_ShouldAddMigration()
+    {
+        var system =
+            new CompanionMigrationSystem();
+
+
+        var migration =
+            new CompanionMigration(
+                "1.0",
+                "2.0");
+
+
+        system.Register(
+            migration);
+
+
+        var result =
+            system.Find(
+                "1.0",
+                "2.0");
+
+
+        Assert.NotNull(
+            result);
+
+
+        Assert.Equal(
+            "2.0",
+            result!.ToVersion);
+    }
+
+
+    [Fact]
+    public void Execute_ShouldCompleteMigration()
+    {
+        var system =
+            new CompanionMigrationSystem();
+
+
+        var migration =
+            new CompanionMigration(
+                "1.0",
+                "2.0");
+
+
+        system.Register(
+            migration);
+
+
+        system.Execute(
+            "1.0",
+            "2.0");
+
+
+        Assert.True(
+            migration.Completed);
+    }
+
+
+    [Fact]
+    public void GetAll_ShouldReturnMigrations()
+    {
+        var system =
+            new CompanionMigrationSystem();
+
+
+        system.Register(
+            new CompanionMigration(
+                "1.0",
+                "2.0"));
+
+
+        var migrations =
+            system.GetAll();
+
+
+        Assert.Single(
+            migrations);
+    }
+}
+
+public class CompanionStorageProviderTests
+{
+    [Fact]
+    public void Save_ShouldStoreValue()
+    {
+        var storage =
+            new CompanionStorageProvider();
+
+
+        storage.Save(
+            "identity",
+            "Lilith");
+
+
+        var result =
+            storage.Load(
+                "identity");
+
+
+        Assert.Equal(
+            "Lilith",
+            result);
+    }
+
+
+    [Fact]
+    public void Exists_ShouldDetectStoredValue()
+    {
+        var storage =
+            new CompanionStorageProvider();
+
+
+        storage.Save(
+            "memory",
+            "Hello");
+
+
+        Assert.True(
+            storage.Exists(
+                "memory"));
+    }
+
+
+    [Fact]
+    public void Delete_ShouldRemoveValue()
+    {
+        var storage =
+            new CompanionStorageProvider();
+
+
+        storage.Save(
+            "profile",
+            "Companion");
+
+
+        storage.Delete(
+            "profile");
+
+
+        Assert.False(
+            storage.Exists(
+                "profile"));
     }
 }
