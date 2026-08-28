@@ -25,8 +25,10 @@ using CompanionStudio.Core.Modules;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Permissions;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Plugins;
 using CompanionStudio.Core.Plugins;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
@@ -36,6 +38,7 @@ using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Runtime;
 using CompanionStudio.Core.Runtime;
+using CompanionStudio.Core.Scheduler;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
@@ -49,8 +52,8 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Plugins;
-using CompanionStudio.Core.Permissions;
+using CompanionStudio.Core.Scheduler;
+using CompanionStudio.Core.StateMachine;
 
 namespace CompanionStudio.Tests;
 
@@ -2166,5 +2169,137 @@ public class CompanionPermissionSystemTests
         Assert.Equal(
             "Model.Execute",
             permissions.First().Id);
+    }
+}
+
+public class CompanionSchedulerTests
+{
+    [Fact]
+    public void Schedule_ShouldAddTask()
+    {
+        var scheduler =
+            new CompanionScheduler();
+
+
+        var task =
+            new CompanionTask(
+                "backup",
+                "Daily Backup");
+
+
+        scheduler.Schedule(task);
+
+
+        var result =
+            scheduler.Find("backup");
+
+
+        Assert.NotNull(result);
+
+
+        Assert.Equal(
+            "Daily Backup",
+            result!.Name);
+    }
+
+
+    [Fact]
+    public void Run_ShouldCompleteTask()
+    {
+        var scheduler =
+            new CompanionScheduler();
+
+
+        var task =
+            new CompanionTask(
+                "memory",
+                "Save Memory");
+
+
+        scheduler.Schedule(task);
+
+
+        scheduler.Run(
+            "memory");
+
+
+        Assert.True(
+            task.Completed);
+    }
+
+
+    [Fact]
+    public void GetAll_ShouldReturnTasks()
+    {
+        var scheduler =
+            new CompanionScheduler();
+
+
+        scheduler.Schedule(
+            new CompanionTask(
+                "health",
+                "Health Check"));
+
+
+        var tasks =
+            scheduler.GetAll();
+
+
+        Assert.Single(
+            tasks);
+    }
+}
+
+public class CompanionStateMachineTests
+{
+    [Fact]
+    public void NewStateMachine_ShouldStartIdle()
+    {
+        var machine =
+            new CompanionStateMachine();
+
+
+        Assert.Equal(
+            CompanionStateType.Idle,
+            machine.CurrentState);
+    }
+
+
+    [Fact]
+    public void ChangeState_ShouldUpdateCurrentState()
+    {
+        var machine =
+            new CompanionStateMachine();
+
+
+        machine.ChangeState(
+            CompanionStateType.Thinking);
+
+
+        Assert.Equal(
+            CompanionStateType.Thinking,
+            machine.CurrentState);
+    }
+
+
+    [Fact]
+    public void Is_ShouldDetectCurrentState()
+    {
+        var machine =
+            new CompanionStateMachine();
+
+
+        machine.ChangeState(
+            CompanionStateType.Listening);
+
+
+        Assert.True(
+            machine.Is(
+                CompanionStateType.Listening));
+
+
+        Assert.False(
+            machine.Is(
+                CompanionStateType.Sleeping));
     }
 }
