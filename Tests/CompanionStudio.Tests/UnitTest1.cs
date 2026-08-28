@@ -2,6 +2,7 @@
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Services;
 using CompanionStudio.Core.Memory;
+using CompanionStudio.Core.Personality;
 
 namespace CompanionStudio.Tests;
 
@@ -103,5 +104,60 @@ public class MemoryTests
         Assert.Contains(
             saved,
             x => x.Content == memory.Content);
+    }
+}
+
+public class PersonalityTests
+{
+    [Fact]
+    public void Save_ShouldCreatePersonalityFile()
+    {
+        var storage = new PersonalityFileStorage();
+
+        var personality = new PersonalityModel
+        {
+            Id = "PER-000001",
+            Name = "Lilith",
+            Tone = "Cálido",
+            Humor = 70,
+            Curiosity = 90,
+            Formality = 40,
+            CreatedAt = DateTime.Now
+        };
+
+        storage.Save(
+            new List<PersonalityModel>
+            {
+                personality
+            });
+
+        var result = storage.Load();
+
+        Assert.Single(result);
+        Assert.Equal(
+            "Lilith",
+            result.First().Name);
+    }
+
+
+    [Fact]
+    public void Create_ShouldSavePersonalityAutomatically()
+    {
+        var storage = new PersonalityFileStorage();
+
+        var service = new PersonalityService(storage);
+
+        var personality = service.Create(
+            "Lilith",
+            "Cálido",
+            70,
+            90,
+            40);
+
+        var saved = storage.Load();
+
+        Assert.Contains(
+            saved,
+            x => x.Name == personality.Name);
     }
 }
