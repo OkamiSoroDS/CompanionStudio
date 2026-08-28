@@ -9,12 +9,17 @@ using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
+using CompanionStudio.Core.Registry;
 using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Repository;
+using CompanionStudio.Core.Runtime;
+using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
@@ -26,10 +31,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Package;
-using CompanionStudio.Core.Package;
-using CompanionStudio.Core.Security;
-using CompanionStudio.Core.Registry;
+using CompanionStudio.Core.Runtime;
 
 namespace CompanionStudio.Tests;
 
@@ -1241,5 +1243,85 @@ public class CompanionRegistryTests
 
         Assert.Null(
             registry.Find("CS-000001"));
+    }
+}
+
+public class CompanionRuntimeTests
+{
+    [Fact]
+    public void Start_ShouldActivateCompanion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var runtime =
+            new CompanionRuntime();
+
+
+        runtime.Start(profile);
+
+
+        Assert.NotNull(
+            runtime.ActiveCompanion);
+
+
+        Assert.True(
+            runtime.IsRunning);
+
+
+        Assert.Equal(
+            "Running",
+            profile.State.Status);
+
+
+        Assert.True(
+            profile.State.IsActive);
+    }
+
+
+    [Fact]
+    public void Stop_ShouldDeactivateCompanion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var runtime =
+            new CompanionRuntime();
+
+
+        runtime.Start(profile);
+
+        runtime.Stop();
+
+
+        Assert.False(
+            runtime.IsRunning);
+
+
+        Assert.Null(
+            runtime.ActiveCompanion);
+
+
+        Assert.Equal(
+            "Stopped",
+            profile.State.Status);
+
+
+        Assert.False(
+            profile.State.IsActive);
     }
 }
