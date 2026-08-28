@@ -5,18 +5,28 @@ namespace CompanionStudio.Core.Services;
 public class IdentityService
 {
     private readonly IdentityManager manager;
+    private readonly IIdentityStorage storage;
 
-    public IdentityService()
+    public IdentityService(IIdentityStorage storage)
     {
         manager = new IdentityManager();
+        this.storage = storage;
     }
 
     public IdentityModel Create(
         string name,
         string description)
     {
-        return manager.CreateIdentity(
+        var identity = manager.CreateIdentity(
             name,
             description);
+
+        var identities = storage.Load().ToList();
+
+        identities.Add(identity);
+
+        storage.Save(identities);
+
+        return identity;
     }
 }

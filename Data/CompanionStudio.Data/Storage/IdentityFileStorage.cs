@@ -3,7 +3,7 @@ using CompanionStudio.Core.Identity;
 
 namespace CompanionStudio.Data.Storage;
 
-public class IdentityFileStorage
+public class IdentityFileStorage : IIdentityStorage
 {
     private readonly string filePath =
         Path.Combine(
