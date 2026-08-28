@@ -1,27 +1,29 @@
 ﻿using CompanionStudio.Core.Engine;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Factory;
+using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Manager;
+using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Memory;
+using CompanionStudio.Core.Migration;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Repository;
+using CompanionStudio.Core.Repository;
+using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Services;
-using CompanionStudio.Data.Storage;
-using CompanionStudio.Data.Storage;
-using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Manager;
-using CompanionStudio.Core.Factory;
-using CompanionStudio.Core.Repository;
-using CompanionStudio.Core.Security;
-using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.State;
 using CompanionStudio.Core.Version;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Data.Storage;
+using CompanionStudio.Core.Migration;
 
 namespace CompanionStudio.Tests;
 
@@ -751,5 +753,81 @@ public class CompanionVersionTests
         Assert.Equal(
             "1.0",
             profile.Version.CurrentVersion);
+    }
+}
+
+public class MigrationManagerTests
+{
+    [Fact]
+    public void Migrate_ShouldUpdateCompanionVersion()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var migration =
+            new MigrationManager();
+
+
+        migration.Migrate(
+            profile,
+            "2.0");
+
+
+        Assert.Equal(
+            "2.0",
+            profile.Version.CurrentVersion);
+
+
+        Assert.NotNull(
+            profile.Version.LastMigration);
+
+
+        Assert.Equal(
+            "Lilith",
+            profile.Identity.Name);
+    }
+
+
+    [Fact]
+    public void Migrate_SameVersion_ShouldDoNothing()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel(),
+                new PersonalityModel());
+
+
+        var before =
+            profile.Version.LastMigration;
+
+
+        var migration =
+            new MigrationManager();
+
+
+        migration.Migrate(
+            profile,
+            "1.0");
+
+
+        Assert.Equal(
+            "1.0",
+            profile.Version.CurrentVersion);
+
+
+        Assert.Equal(
+            before,
+            profile.Version.LastMigration);
     }
 }
