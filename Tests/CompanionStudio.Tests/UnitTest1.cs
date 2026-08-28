@@ -41,6 +41,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Health;
 
 namespace CompanionStudio.Tests;
 
@@ -1681,5 +1682,63 @@ public class CompanionBackupManagerTests
 
 
         File.Delete(path);
+    }
+}
+
+public class CompanionHealthMonitorTests
+{
+    [Fact]
+    public void HealthyCompanion_ShouldPassAllChecks()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        var monitor =
+            new CompanionHealthMonitor();
+
+
+        Assert.True(
+            monitor.CheckIdentity(profile));
+
+
+        Assert.True(
+            monitor.CheckState(profile));
+
+
+        Assert.True(
+            monitor.CheckVersion(profile));
+
+
+        Assert.True(
+            monitor.IsHealthy(profile));
+    }
+
+
+    [Fact]
+    public void CompanionWithoutIdentity_ShouldFail()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel(),
+                new PersonalityModel());
+
+
+        var monitor =
+            new CompanionHealthMonitor();
+
+
+        Assert.False(
+            monitor.CheckIdentity(profile));
+
+
+        Assert.False(
+            monitor.IsHealthy(profile));
     }
 }
