@@ -3,6 +3,7 @@ using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Services;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Security;
 
 namespace CompanionStudio.Tests;
 
@@ -159,5 +160,52 @@ public class PersonalityTests
         Assert.Contains(
             saved,
             x => x.Name == personality.Name);
+    }
+}
+
+public class IntegrityTests
+{
+    [Fact]
+    public void CreateHash_ShouldGenerateHash()
+    {
+        var checker = new IntegrityChecker();
+
+        var hash = checker.CreateHash(
+            "Lilith");
+
+        Assert.NotEmpty(hash);
+    }
+
+
+    [Fact]
+    public void Verify_ShouldDetectValidContent()
+    {
+        var checker = new IntegrityChecker();
+
+        var content = "Companion Studio";
+
+        var hash = checker.CreateHash(content);
+
+        var result = checker.Verify(
+            content,
+            hash);
+
+        Assert.True(result);
+    }
+
+
+    [Fact]
+    public void Verify_ShouldDetectModifiedContent()
+    {
+        var checker = new IntegrityChecker();
+
+        var hash = checker.CreateHash(
+            "Companion Studio");
+
+        var result = checker.Verify(
+            "Companion Studio Modificado",
+            hash);
+
+        Assert.False(result);
     }
 }
