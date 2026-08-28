@@ -1,5 +1,7 @@
-﻿using CompanionStudio.Core.Backup;
+﻿using CompanionStudio.Core.Api;
 using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Backup;
+using CompanionStudio.Core.Commands;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Configuration;
 using CompanionStudio.Core.Engine;
@@ -10,6 +12,7 @@ using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Health;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Lifecycle;
 using CompanionStudio.Core.Lifecycle;
 using CompanionStudio.Core.Logging;
 using CompanionStudio.Core.Manager;
@@ -43,8 +46,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Lifecycle;
-using CompanionStudio.Core.Api;
+using CompanionStudio.Core.Commands;
 
 namespace CompanionStudio.Tests;
 
@@ -1885,5 +1887,68 @@ public class CompanionApiTests
 
         Assert.False(
             api.IsRunning());
+    }
+}
+
+public class CompanionCommandSystemTests
+{
+    [Fact]
+    public void StartCommand_ShouldActivateCompanion()
+    {
+        var system =
+            new CompanionCommandSystem();
+
+
+        var command =
+            new CompanionCommand(
+                "Start",
+                "CS-000001");
+
+
+        var result =
+            system.Execute(command);
+
+
+        Assert.False(result);
+    }
+
+
+    [Fact]
+    public void StopCommand_ShouldExecute()
+    {
+        var system =
+            new CompanionCommandSystem();
+
+
+        var command =
+            new CompanionCommand(
+                "Stop");
+
+
+        var result =
+            system.Execute(command);
+
+
+        Assert.True(result);
+    }
+
+
+    [Fact]
+    public void UnknownCommand_ShouldFail()
+    {
+        var system =
+            new CompanionCommandSystem();
+
+
+        var command =
+            new CompanionCommand(
+                "Unknown");
+
+
+        var result =
+            system.Execute(command);
+
+
+        Assert.False(result);
     }
 }
