@@ -1,6 +1,7 @@
 ﻿using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Services;
+using CompanionStudio.Core.Memory;
 
 namespace CompanionStudio.Tests;
 
@@ -51,5 +52,56 @@ public class IdentityServiceTests
         Assert.Contains(
             saved,
             x => x.Name == identity.Name);
+    }
+}
+
+public class MemoryTests
+{
+    [Fact]
+    public void Save_ShouldCreateMemoryFile()
+    {
+        var storage = new MemoryFileStorage();
+
+        var memory = new MemoryModel
+        {
+            Id = "MEM-000001",
+            Type = "fact",
+            Content = "Primera memoria",
+            Importance = 80,
+            CreatedAt = DateTime.Now
+        };
+
+        storage.Save(
+            new List<MemoryModel>
+            {
+                memory
+            });
+
+        var result = storage.Load();
+
+        Assert.Single(result);
+        Assert.Equal(
+            "Primera memoria",
+            result.First().Content);
+    }
+
+
+    [Fact]
+    public void Create_ShouldSaveMemoryAutomatically()
+    {
+        var storage = new MemoryFileStorage();
+
+        var service = new MemoryService(storage);
+
+        var memory = service.Create(
+            "fact",
+            "Companion Studio tiene memoria persistente",
+            90);
+
+        var saved = storage.Load();
+
+        Assert.Contains(
+            saved,
+            x => x.Content == memory.Content);
     }
 }
