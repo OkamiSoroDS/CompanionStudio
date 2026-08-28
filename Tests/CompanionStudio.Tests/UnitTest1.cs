@@ -32,6 +32,9 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Runtime;
+using CompanionStudio.Core.Events;
+using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Personality;
 
 namespace CompanionStudio.Tests;
 
@@ -1323,5 +1326,69 @@ public class CompanionRuntimeTests
 
         Assert.False(
             profile.State.IsActive);
+    }
+}
+
+public class CompanionEventSystemTests
+{
+    [Fact]
+    public void Publish_ShouldRegisterEvent()
+    {
+        var system =
+            new CompanionEventSystem();
+
+
+        var companionEvent =
+            new CompanionEvent(
+                "CompanionStarted");
+
+
+        system.Publish(
+            companionEvent);
+
+
+        var events =
+            system.GetAll();
+
+
+        Assert.Single(
+            events);
+
+
+        Assert.Equal(
+            "CompanionStarted",
+            events.First().Name);
+    }
+
+
+    [Fact]
+    public void MultipleEvents_ShouldKeepHistory()
+    {
+        var system =
+            new CompanionEventSystem();
+
+
+        system.Publish(
+            new CompanionEvent(
+                "CompanionStarted"));
+
+
+        system.Publish(
+            new CompanionEvent(
+                "MemoryCreated"));
+
+
+        system.Publish(
+            new CompanionEvent(
+                "VersionUpdated"));
+
+
+        var events =
+            system.GetAll();
+
+
+        Assert.Equal(
+            3,
+            events.Count);
     }
 }
