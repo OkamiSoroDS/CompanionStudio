@@ -7,6 +7,8 @@ using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Migration;
+using CompanionStudio.Core.Migration;
+using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
@@ -16,6 +18,7 @@ using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
+using CompanionStudio.Core.Serialization;
 using CompanionStudio.Core.Services;
 using CompanionStudio.Core.State;
 using CompanionStudio.Core.Version;
@@ -23,8 +26,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Migration;
-using CompanionStudio.Core.Serialization;
+using CompanionStudio.Core.Package;
 
 namespace CompanionStudio.Tests;
 
@@ -910,5 +912,62 @@ public class CompanionSerializerTests
 
         Assert.NotNull(
             result.Version);
+    }
+}
+
+public class CompanionPackageTests
+{
+    [Fact]
+    public void Package_ShouldContainCompanionProfile()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        Assert.NotNull(
+            package.Profile);
+
+
+        Assert.Equal(
+            "Lilith",
+            package.Profile.Identity.Name);
+
+
+        Assert.Equal(
+            "1.0",
+            package.PackageVersion);
+    }
+
+
+    [Fact]
+    public void Package_ShouldCreateTimestamp()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel(),
+                new PersonalityModel());
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        Assert.NotEqual(
+            default,
+            package.CreatedAt);
     }
 }
