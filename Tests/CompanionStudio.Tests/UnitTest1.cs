@@ -1,8 +1,12 @@
-﻿using CompanionStudio.Core.Engine;
+﻿using CompanionStudio.Core.Configuration;
+using CompanionStudio.Core.Engine;
+using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Factory;
 using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Logging;
 using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Manager;
 using CompanionStudio.Core.Memory;
@@ -12,12 +16,14 @@ using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Registry;
 using CompanionStudio.Core.Repository;
 using CompanionStudio.Core.Repository;
+using CompanionStudio.Core.Runtime;
 using CompanionStudio.Core.Runtime;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Security;
@@ -31,11 +37,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
-using CompanionStudio.Core.Runtime;
-using CompanionStudio.Core.Events;
-using CompanionStudio.Core.Identity;
-using CompanionStudio.Core.Personality;
-using CompanionStudio.Core.Logging;
+using CompanionStudio.Core.Configuration;
 
 namespace CompanionStudio.Tests;
 
@@ -1447,5 +1449,60 @@ public class CompanionLoggerTests
         Assert.Equal(
             3,
             logs.Count);
+    }
+}
+
+public class CompanionConfigurationTests
+{
+    [Fact]
+    public void Configuration_ShouldInitializeDefaults()
+    {
+        var config =
+            new CompanionConfiguration();
+
+
+        Assert.Equal(
+            "Companions",
+            config.StoragePath);
+
+
+        Assert.Equal(
+            "es",
+            config.DefaultLanguage);
+
+
+        Assert.True(
+            config.AutoSave);
+
+
+        Assert.True(
+            config.LoggingEnabled);
+
+
+        Assert.Equal(
+            "1.0",
+            config.Version);
+    }
+
+
+    [Fact]
+    public void Configuration_ShouldAllowChanges()
+    {
+        var config =
+            new CompanionConfiguration();
+
+
+        config.DefaultLanguage = "en";
+
+        config.AutoSave = false;
+
+
+        Assert.Equal(
+            "en",
+            config.DefaultLanguage);
+
+
+        Assert.False(
+            config.AutoSave);
     }
 }
