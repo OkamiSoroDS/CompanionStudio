@@ -44,6 +44,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Lifecycle;
+using CompanionStudio.Core.Api;
 
 namespace CompanionStudio.Tests;
 
@@ -1817,5 +1818,72 @@ public class CompanionLifecycleManagerTests
 
         Assert.Null(
             manager.Runtime.ActiveCompanion);
+    }
+}
+
+public class CompanionApiTests
+{
+    [Fact]
+    public void Start_ShouldRunCompanionThroughApi()
+    {
+        var api =
+            new CompanionApi();
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        api.Register(profile);
+
+
+        var result =
+            api.Start(
+                "CS-000001");
+
+
+        Assert.True(result);
+
+
+        Assert.True(
+            api.IsRunning());
+    }
+
+
+    [Fact]
+    public void Stop_ShouldStopCompanionThroughApi()
+    {
+        var api =
+            new CompanionApi();
+
+
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel());
+
+
+        api.Register(profile);
+
+
+        api.Start(
+            "CS-000001");
+
+
+        api.Stop();
+
+
+        Assert.False(
+            api.IsRunning());
     }
 }
