@@ -35,6 +35,7 @@ using CompanionStudio.Core.Runtime;
 using CompanionStudio.Core.Events;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Logging;
 
 namespace CompanionStudio.Tests;
 
@@ -1390,5 +1391,61 @@ public class CompanionEventSystemTests
         Assert.Equal(
             3,
             events.Count);
+    }
+}
+
+public class CompanionLoggerTests
+{
+    [Fact]
+    public void Log_ShouldCreateEntry()
+    {
+        var logger =
+            new CompanionLogger();
+
+
+        logger.Log(
+            "CompanionStarted");
+
+
+        var logs =
+            logger.GetLogs();
+
+
+        Assert.Single(
+            logs);
+
+
+        Assert.Contains(
+            "CompanionStarted",
+            logs.First());
+    }
+
+
+    [Fact]
+    public void MultipleLogs_ShouldKeepHistory()
+    {
+        var logger =
+            new CompanionLogger();
+
+
+        logger.Log(
+            "CompanionStarted");
+
+
+        logger.Log(
+            "MemoryCreated");
+
+
+        logger.Log(
+            "VersionUpdated");
+
+
+        var logs =
+            logger.GetLogs();
+
+
+        Assert.Equal(
+            3,
+            logs.Count);
     }
 }
