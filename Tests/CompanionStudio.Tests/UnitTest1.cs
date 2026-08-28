@@ -47,6 +47,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Commands;
+using CompanionStudio.Core.Modules;
 
 namespace CompanionStudio.Tests;
 
@@ -1950,5 +1951,72 @@ public class CompanionCommandSystemTests
 
 
         Assert.False(result);
+    }
+}
+
+public class CompanionModuleSystemTests
+{
+    [Fact]
+    public void Register_ShouldAddModule()
+    {
+        var system =
+            new CompanionModuleSystem();
+
+
+        var module =
+            new CompanionModule(
+                "voice",
+                "Voice Module");
+
+
+        system.Register(module);
+
+
+        var result =
+            system.Find("voice");
+
+
+        Assert.NotNull(result);
+
+
+        Assert.Equal(
+            "Voice Module",
+            result!.Name);
+    }
+
+
+    [Fact]
+    public void Enable_ShouldActivateModule()
+    {
+        var module =
+            new CompanionModule(
+                "memory",
+                "Memory Module");
+
+
+        module.Enable();
+
+
+        Assert.True(
+            module.Enabled);
+    }
+
+
+    [Fact]
+    public void Disable_ShouldDeactivateModule()
+    {
+        var module =
+            new CompanionModule(
+                "vision",
+                "Vision Module");
+
+
+        module.Enable();
+
+        module.Disable();
+
+
+        Assert.False(
+            module.Enabled);
     }
 }
