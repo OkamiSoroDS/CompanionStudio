@@ -497,6 +497,18 @@ public class CompanionProfileStorageTests
         Assert.Equal(
             "Lilith",
             result!.Identity.Name);
+
+        Assert.NotNull(
+    result.State);
+
+
+        Assert.True(
+            result.State.IsActive);
+
+
+        Assert.Equal(
+            "1.0",
+            result.State.Version);
     }
 }
 
