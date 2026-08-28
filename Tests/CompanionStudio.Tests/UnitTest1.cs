@@ -27,6 +27,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Package;
 
 namespace CompanionStudio.Tests;
 
@@ -969,5 +970,95 @@ public class CompanionPackageTests
         Assert.NotEqual(
             default,
             package.CreatedAt);
+    }
+}
+
+public class PackageSerializerTests
+{
+    [Fact]
+    public void Serialize_ShouldCreatePackageJson()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var serializer =
+            new PackageSerializer();
+
+
+        var json =
+            serializer.Serialize(package);
+
+
+        Assert.Contains(
+            "Lilith",
+            json);
+
+
+        Assert.Contains(
+            "PackageVersion",
+            json);
+    }
+
+
+    [Fact]
+    public void Deserialize_ShouldRestorePackage()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var serializer =
+            new PackageSerializer();
+
+
+        var json =
+            serializer.Serialize(package);
+
+
+        var result =
+            serializer.Deserialize(json);
+
+
+        Assert.NotNull(
+            result);
+
+
+        Assert.Equal(
+            "Lilith",
+            result!.Profile.Identity.Name);
+
+
+        Assert.Equal(
+            "1.0",
+            result.PackageVersion);
     }
 }
