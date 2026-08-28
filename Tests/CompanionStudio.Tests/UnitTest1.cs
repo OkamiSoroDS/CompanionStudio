@@ -55,6 +55,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Scheduler;
 using CompanionStudio.Core.StateMachine;
 using CompanionStudio.Core.Events;
+using CompanionStudio.Core.Logging;
 
 namespace CompanionStudio.Tests;
 
