@@ -5,6 +5,7 @@ using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Security;
 using CompanionStudio.Core.Engine;
+using CompanionStudio.Core.Profile;
 
 namespace CompanionStudio.Tests;
 
@@ -278,5 +279,67 @@ public class CompanionEngineTests
         Assert.Equal(
             "Primer recuerdo",
             engine.Memories.First().Content);
+    }
+}
+
+public class CompanionProfileTests
+{
+    [Fact]
+    public void Profile_ShouldContainIdentityAndPersonality()
+    {
+        var identity = new IdentityModel
+        {
+            Id = "CS-000001",
+            Name = "Lilith"
+        };
+
+        var personality = new PersonalityModel
+        {
+            Id = "PER-000001",
+            Name = "Lilith",
+            Tone = "Cálido"
+        };
+
+        var profile = new CompanionProfile(
+            identity,
+            personality);
+
+
+        Assert.Equal(
+            "Lilith",
+            profile.Identity.Name);
+
+
+        Assert.Equal(
+            "Lilith",
+            profile.Personality.Name);
+    }
+
+
+    [Fact]
+    public void Profile_ShouldAddMemory()
+    {
+        var profile = new CompanionProfile(
+            new IdentityModel(),
+            new PersonalityModel());
+
+
+        var memory = new MemoryModel
+        {
+            Id = "MEM-000001",
+            Content = "Primer recuerdo"
+        };
+
+
+        profile.AddMemory(memory);
+
+
+        Assert.Single(
+            profile.Memories);
+
+
+        Assert.Equal(
+            "Primer recuerdo",
+            profile.Memories.First().Content);
     }
 }
