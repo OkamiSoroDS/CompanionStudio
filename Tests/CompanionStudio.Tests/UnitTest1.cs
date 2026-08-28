@@ -28,6 +28,7 @@ using CompanionStudio.Data.Storage;
 using CompanionStudio.Data.Storage;
 using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Package;
+using CompanionStudio.Core.Security;
 
 namespace CompanionStudio.Tests;
 
@@ -1060,5 +1061,80 @@ public class PackageSerializerTests
         Assert.Equal(
             "1.0",
             result.PackageVersion);
+    }
+}
+
+public class IntegrityPackageVerifierTests
+{
+    [Fact]
+    public void GenerateHash_ShouldCreatePackageFingerprint()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var verifier =
+            new IntegrityPackageVerifier();
+
+
+        var hash =
+            verifier.GenerateHash(package);
+
+
+        Assert.False(
+            string.IsNullOrEmpty(hash));
+    }
+
+
+    [Fact]
+    public void Verify_ShouldConfirmOriginalPackage()
+    {
+        var profile =
+            new CompanionProfile(
+                new IdentityModel
+                {
+                    Id = "CS-000001",
+                    Name = "Lilith"
+                },
+                new PersonalityModel
+                {
+                    Id = "PER-000001",
+                    Name = "Lilith"
+                });
+
+
+        var package =
+            new CompanionPackage(profile);
+
+
+        var verifier =
+            new IntegrityPackageVerifier();
+
+
+        var hash =
+            verifier.GenerateHash(package);
+
+
+        var result =
+            verifier.Verify(
+                package,
+                hash);
+
+
+        Assert.True(result);
     }
 }
