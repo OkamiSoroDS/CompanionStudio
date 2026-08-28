@@ -4,6 +4,7 @@ using CompanionStudio.Core.Services;
 using CompanionStudio.Core.Memory;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Security;
+using CompanionStudio.Core.Engine;
 
 namespace CompanionStudio.Tests;
 
@@ -12,7 +13,10 @@ public class IdentityFileStorageTests
     [Fact]
     public void Save_ShouldCreateIdentityFile()
     {
-        var storage = new IdentityFileStorage();
+        var storage = new IdentityFileStorage(
+     Path.Combine(
+         Path.GetTempPath(),
+         Guid.NewGuid() + ".json"));
 
         var identity = new IdentityModel
         {
@@ -41,7 +45,10 @@ public class IdentityServiceTests
     [Fact]
     public void Create_ShouldSaveIdentityAutomatically()
     {
-        var storage = new IdentityFileStorage();
+        var storage = new IdentityFileStorage(
+    Path.Combine(
+        Path.GetTempPath(),
+        Guid.NewGuid() + ".json"));
 
         var service = new IdentityService(storage);
 
@@ -207,5 +214,69 @@ public class IntegrityTests
             hash);
 
         Assert.False(result);
+    }
+}
+
+public class CompanionEngineTests
+{
+    [Fact]
+    public void Engine_ShouldCreateCompanion()
+    {
+        var identity = new IdentityModel
+        {
+            Id = "CS-000001",
+            Name = "Lilith",
+            Description = "Asistente personal",
+            IsActive = true
+        };
+
+        var personality = new PersonalityModel
+        {
+            Id = "PER-000001",
+            Name = "Lilith",
+            Tone = "Cálido",
+            Humor = 70,
+            Curiosity = 90,
+            Formality = 40
+        };
+
+        var engine = new CompanionEngine(
+            identity,
+            personality);
+
+        Assert.Equal(
+            "Lilith",
+            engine.Identity.Name);
+
+        Assert.Equal(
+            "Lilith",
+            engine.Personality.Name);
+    }
+
+
+    [Fact]
+    public void Engine_ShouldStoreMemory()
+    {
+        var identity = new IdentityModel();
+
+        var personality = new PersonalityModel();
+
+        var engine = new CompanionEngine(
+            identity,
+            personality);
+
+        var memory = new MemoryModel
+        {
+            Id = "MEM-000001",
+            Content = "Primer recuerdo"
+        };
+
+        engine.AddMemory(memory);
+
+        Assert.Single(engine.Memories);
+
+        Assert.Equal(
+            "Primer recuerdo",
+            engine.Memories.First().Content);
     }
 }

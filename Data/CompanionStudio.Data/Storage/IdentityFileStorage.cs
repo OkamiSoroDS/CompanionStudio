@@ -5,11 +5,15 @@ namespace CompanionStudio.Data.Storage;
 
 public class IdentityFileStorage : IIdentityStorage
 {
-    private readonly string filePath =
-        Path.Combine(
-            "Files",
-            "identities.json"
-        );
+    private readonly string filePath;
+
+    public IdentityFileStorage(string? customPath = null)
+    {
+        filePath = customPath ??
+            Path.Combine(
+                "Files",
+                "identities.json");
+    }
 
     public void Save(IEnumerable<IdentityModel> identities)
     {
@@ -39,18 +43,10 @@ public class IdentityFileStorage : IIdentityStorage
         if (!File.Exists(filePath))
             return new List<IdentityModel>();
 
-        string json;
+        var json = File.ReadAllText(filePath);
 
-        using (var stream = new FileStream(
-            filePath,
-            FileMode.Open,
-            FileAccess.Read,
-            FileShare.ReadWrite))
-        {
-            using var reader = new StreamReader(stream);
-
-            json = reader.ReadToEnd();
-        }
+        if (string.IsNullOrWhiteSpace(json))
+            return new List<IdentityModel>();
 
         return JsonSerializer.Deserialize<List<IdentityModel>>(json)
                ?? new List<IdentityModel>();
