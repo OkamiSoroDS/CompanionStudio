@@ -255,7 +255,7 @@ Companion Studio
 Creador:
 
 
-CHECO
+OkamiSoroDS
 
 
 Estado:
