@@ -8,13 +8,17 @@ public class CompanionMigration
 
     public bool Completed { get; private set; }
 
+    public DateTime? CompletedAt { get; private set; }
+
 
     public CompanionMigration(
         string fromVersion,
         string toVersion)
     {
         FromVersion = fromVersion;
+
         ToVersion = toVersion;
+
         Completed = false;
     }
 
@@ -22,5 +26,7 @@ public class CompanionMigration
     public void Complete()
     {
         Completed = true;
+
+        CompletedAt = DateTime.UtcNow;
     }
 }

@@ -63,6 +63,8 @@ using CompanionStudio.Core.Package;
 using CompanionStudio.Core.Profile;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Personality;
+using CompanionStudio.Core.Identity;
+using CompanionStudio.Core.Identity;
 
 namespace CompanionStudio.Tests;
 
@@ -2643,5 +2645,304 @@ public class CompanionBackupSystemTests
 
         Assert.Single(
             backups);
+    }
+}
+
+public class CompanionPackageSystemTests
+{
+    private CompanionProfile CreateProfile()
+    {
+        var identity =
+            new IdentityModel
+            {
+                Id = "001",
+                Name = "Lilith",
+                Description = "Companion test"
+            };
+
+
+        var personality =
+            new PersonalityModel();
+
+
+        return new CompanionProfile(
+            identity,
+            personality);
+    }
+
+
+
+    [Fact]
+    public void Export_ShouldStorePackage()
+    {
+        var system =
+            new CompanionPackageSystem();
+
+
+        var profile =
+            CreateProfile();
+
+
+        var package =
+            new CompanionPackage(
+                profile);
+
+
+        system.Export(
+            package);
+
+
+        var packages =
+            system.GetAll();
+
+
+        Assert.Single(
+            packages);
+    }
+
+
+
+    [Fact]
+    public void Find_ShouldReturnPackage()
+    {
+        var system =
+            new CompanionPackageSystem();
+
+
+        var profile =
+            CreateProfile();
+
+
+        var package =
+            new CompanionPackage(
+                profile);
+
+
+        system.Export(
+            package);
+
+
+        var result =
+            system.Find(
+                profile);
+
+
+        Assert.NotNull(
+            result);
+    }
+
+
+
+    [Fact]
+    public void Import_ShouldMarkPackageImported()
+    {
+        var system =
+            new CompanionPackageSystem();
+
+
+        var profile =
+            CreateProfile();
+
+
+        var package =
+            new CompanionPackage(
+                profile);
+
+
+        system.Export(
+            package);
+
+
+        system.Import(
+            profile);
+
+
+        Assert.True(
+            package.Imported);
+    }
+}
+
+public class IdentityValidatorTests
+{
+    private IdentityModel CreateIdentity()
+    {
+        return new IdentityModel
+        {
+            Id = "001",
+            Name = "Lilith",
+            Version = "1.0",
+            Description = "Companion Test"
+        };
+    }
+
+
+
+    [Fact]
+    public void GenerateHash_ShouldCreateIntegrityHash()
+    {
+        var identity =
+            CreateIdentity();
+
+
+        var validator =
+            new IdentityValidator();
+
+
+        var hash =
+            validator.GenerateHash(
+                identity);
+
+
+        Assert.False(
+            string.IsNullOrEmpty(
+                hash));
+    }
+
+
+
+    [Fact]
+    public void Validate_ShouldReturnTrue_WhenIdentityIsValid()
+    {
+        var identity =
+            CreateIdentity();
+
+
+        var validator =
+            new IdentityValidator();
+
+
+        identity.IntegrityHash =
+            validator.GenerateHash(
+                identity);
+
+
+        var result =
+            validator.Validate(
+                identity);
+
+
+        Assert.True(
+            result);
+    }
+
+
+
+    [Fact]
+    public void Validate_ShouldReturnFalse_WhenIdentityChanges()
+    {
+        var identity =
+            CreateIdentity();
+
+
+        var validator =
+            new IdentityValidator();
+
+
+        identity.IntegrityHash =
+            validator.GenerateHash(
+                identity);
+
+
+        identity.Name =
+            "Otra identidad";
+
+
+        var result =
+            validator.Validate(
+                identity);
+
+
+        Assert.False(
+            result);
+    }
+}
+
+public class CompanionIdentityServiceTests
+{
+    [Fact]
+    public void Create_ShouldGenerateIdentity()
+    {
+        var service =
+            new CompanionIdentityService();
+
+
+        var identity =
+            service.Create(
+                "Lilith",
+                "Companion IA");
+
+
+        Assert.Equal(
+            "Lilith",
+            identity.Name);
+
+
+        Assert.False(
+            string.IsNullOrEmpty(
+                identity.Id));
+
+
+        Assert.False(
+            string.IsNullOrEmpty(
+                identity.IntegrityHash));
+    }
+
+
+
+    [Fact]
+    public void Validate_ShouldReturnTrue_ForNewIdentity()
+    {
+        var service =
+            new CompanionIdentityService();
+
+
+        var identity =
+            service.Create(
+                "Lilith");
+
+
+        var result =
+            service.Validate(
+                identity);
+
+
+        Assert.True(
+            result);
+    }
+
+
+
+    [Fact]
+    public void RefreshHash_ShouldUpdateIntegrity()
+    {
+        var service =
+            new CompanionIdentityService();
+
+
+        var identity =
+            service.Create(
+                "Lilith");
+
+
+        var oldHash =
+            identity.IntegrityHash;
+
+
+        identity.Description =
+            "Nueva descripción";
+
+
+        service.RefreshHash(
+            identity);
+
+
+        Assert.NotEqual(
+            oldHash,
+            identity.IntegrityHash);
+
+
+        Assert.True(
+            service.Validate(
+                identity));
     }
 }
