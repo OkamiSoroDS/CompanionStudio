@@ -1,0 +1,68 @@
+[
+  {
+    "Id": "CS-000001",
+    "Name": "Lilith",
+    "Version": "1.0",
+    "Description": "Companion AI identity prototype",
+    "CreatedAt": "2026-08-29T18:25:44.6249297Z",
+    "IsActive": true,
+    "IntegrityHash": "693F355550B872C117AF1C8E7053A884D56271409F2FA1F7A2C162299B829735",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-732F838F457AA45F531712D950DC5F18"
+  },
+  {
+    "Id": "CS-000001",
+    "Name": "vamos",
+    "Version": "1.0",
+    "Description": "progresando",
+    "CreatedAt": "2026-08-29T18:27:20.8386455Z",
+    "IsActive": true,
+    "IntegrityHash": "806AA316D4221FDF1A18A082DF992861C4634D7F44B769F61A31DCE35FAF0E7F",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-569922B4AF7477348D2D5EE35B0E570F"
+  },
+  {
+    "Id": "CS-000002",
+    "Name": "vamos",
+    "Version": "1.0",
+    "Description": "progresando",
+    "CreatedAt": "2026-08-29T18:27:27.7044913Z",
+    "IsActive": true,
+    "IntegrityHash": "F377E29DE5E01DD6CD7314B65B808F1F46527495C71E44BE10BD67D091F6FD73",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-489A68986BD8E6B7B78B4342C6D1DFD9"
+  },
+  {
+    "Id": "CS-000001",
+    "Name": "aurora",
+    "Version": "1.0",
+    "Description": "segunda prueva",
+    "CreatedAt": "2026-08-29T18:57:14.2903231Z",
+    "IsActive": true,
+    "IntegrityHash": "31DD131783179140229BEAECF3C089D7D9E532142BE96E0DD4A83FE740271D2F",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-BCD5DDAA1D7D47E6A7BB7DB2906CD9BF"
+  },
+  {
+    "Id": "CS-000002",
+    "Name": "aurora_2",
+    "Version": "1.0",
+    "Description": "segunda prueva",
+    "CreatedAt": "2026-08-29T18:57:26.3287475Z",
+    "IsActive": true,
+    "IntegrityHash": "568705613E132217980D8E4EC4428D571AF65697CE19F4591BF78BC829332D11",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-BA499B86E64C3DC7A04EFED3FA3C14CF"
+  },
+  {
+    "Id": "CS-000003",
+    "Name": "aurora_2",
+    "Version": "1.0",
+    "Description": "segunda prueva",
+    "CreatedAt": "2026-08-29T18:57:35.5598271Z",
+    "IsActive": true,
+    "IntegrityHash": "7FC25A43D68C4E980C28CA93D853392364CCAA6744BFBD5D691C41FF68429D4C",
+    "IsLocked": true,
+    "IdentityFingerprint": "CS-39207AACC991C8FB8C798A3371073EB2"
+  }
+]

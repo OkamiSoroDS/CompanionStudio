@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Apps/">
+    <Project Path="Apps/CompanionStudio.App/CompanionStudio.App.csproj" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="Core/CompanionStudio.Core/CompanionStudio.Core.csproj" />
+  </Folder>
+  <Folder Name="/Data/">
+    <Project Path="Data/CompanionStudio.Data/CompanionStudio.Data.csproj" />
+  </Folder>
+</Solution>

@@ -6,9 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\CompanionStudio.Core\CompanionStudio.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+
+		<ProjectReference Include="..\..\Core\CompanionStudio.Core\CompanionStudio.Core.csproj" />
+
+	</ItemGroup>
 
   <ItemGroup>
     <Folder Include="Files\" />

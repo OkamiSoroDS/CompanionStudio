@@ -65,6 +65,7 @@ using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Personality;
 using CompanionStudio.Core.Identity;
 using CompanionStudio.Core.Identity;
+using CompanionStudio.Data.Storage;
 
 namespace CompanionStudio.Tests;
 
@@ -561,7 +562,10 @@ public class CompanionFactoryTests
     [Fact]
     public void Create_ShouldGenerateCompleteCompanion()
     {
-        var factory = new CompanionFactory();
+        var storage = new IdentityFileStorage(
+     Guid.NewGuid() + ".json");
+
+        var factory = new CompanionFactory(storage);
 
 
         var companion =

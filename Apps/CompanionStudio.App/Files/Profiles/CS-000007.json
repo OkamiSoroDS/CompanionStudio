@@ -1,0 +1,15 @@
+{
+  "IdentityId": "CS-000007",
+  "PersonalityType": "Neutral",
+  "CommunicationStyle": "Balanced",
+  "Tone": "Friendly",
+  "Traits": [
+    "Curious"
+  ],
+  "Values": [
+    "Trust"
+  ],
+  "Preferences": [],
+  "CreatedAt": "2026-08-29T21:59:35.2907861Z",
+  "UpdatedAt": "2026-08-29T21:59:35.2915283Z"
+}

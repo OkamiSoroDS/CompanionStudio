@@ -5,33 +5,116 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:components="clr-namespace:CompanionStudio.App.UI.Components"
     x:Class="CompanionStudio.App.UI.Views.DashboardPage"
-    Title="Dashboard">
+    Title="Companion Studio">
+    
+
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem
+            Text="⚙️"
+            Clicked="Settings_Clicked"/>
+
+    </ContentPage.ToolbarItems>
 
 
     <ScrollView>
 
         <VerticalStackLayout
-            Padding="20"
-            Spacing="20">
+            Padding="30"
+            Spacing="25">
 
 
             <Label
                 Text="Companion Studio"
-                FontSize="32"
+                FontSize="36"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"/>
 
 
+
             <Label
-                Text="Identity Management Dashboard"
-                FontSize="16"
+                Text="Identity Management System"
+                FontSize="18"
                 HorizontalOptions="Center"/>
 
 
-            <components:IdentityCard />
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+            <!-- CURRENT IDENTITY -->
+
+            <Border
+                Padding="15"
+                StrokeShape="RoundRectangle 15">
+
+
+                <Label
+                    x:Name="CurrentIdentityLabel"
+                    Text="Current Identity: None"
+                    FontSize="18"/>
+
+
+            </Border>
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+
+            <Label
+                Text="Create New Companion"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+
+
+            <Entry
+                x:Name="NameEntry"
+                Placeholder="Companion name"/>
+
+
+
+            <Entry
+                x:Name="DescriptionEntry"
+                Placeholder="Description"/>
+
+
+
+            <Button
+                Text="Create Identity"
+                Clicked="CreateIdentity_Clicked"/>
+
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+
+            <Label
+                Text="Current Identities"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+
+
+            <VerticalStackLayout
+                x:Name="IdentityCardsContainer"
+                Spacing="15"/>
+
 
 
         </VerticalStackLayout>
+
 
     </ScrollView>
 

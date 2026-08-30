@@ -1,8 +1,26 @@
-﻿namespace CompanionStudio.Core.Identity;
+﻿using System.Collections.Generic;
+
+
+namespace CompanionStudio.Core.Identity;
+
 
 public interface IIdentityStorage
 {
-    void Save(IEnumerable<IdentityModel> identities);
 
-    IEnumerable<IdentityModel> Load();
+    List<IdentityModel> Load();
+
+
+
+    void Save(
+        IEnumerable<IdentityModel> identities);
+
+
+
+    void SaveActiveIdentity(
+        string identityId);
+
+
+
+    string? LoadActiveIdentity();
+
 }

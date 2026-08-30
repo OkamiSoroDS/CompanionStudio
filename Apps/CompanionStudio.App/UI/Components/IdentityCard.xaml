@@ -5,30 +5,74 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="CompanionStudio.App.UI.Components.IdentityCard">
 
-    <Border
-        StrokeShape="RoundRectangle 20"
-        Padding="20"
-        Margin="10">
 
-        <VerticalStackLayout Spacing="10">
+    <Border
+        Padding="20"
+        StrokeShape="RoundRectangle 15">
+
+
+        <VerticalStackLayout
+            Spacing="8">
+
 
             <Label
                 Text="Companion Identity"
                 FontSize="22"
                 FontAttributes="Bold"/>
 
-            <Label
-                Text="Name: Lilith"
-                FontSize="18"/>
+
 
             <Label
-                Text="Status: Active"/>
+                x:Name="NameLabel"
+                Text="Name: --"/>
+
+
 
             <Label
-                Text="Identity Hash: Pending"/>
+                x:Name="VersionLabel"
+                Text="Version: --"/>
+
+
+
+            <Label
+                x:Name="IdLabel"
+                Text="ID: --"/>
+
+
+
+            <Label
+                x:Name="StatusLabel"
+                Text="Status: Offline"/>
+
+
+
+            <Label
+                x:Name="IntegrityLabel"
+                Text="Integrity: --"/>
+
+
+
+            <Label
+                x:Name="LockLabel"
+                Text="Core Lock: --"/>
+
+
+
+            <Label
+                x:Name="FingerprintLabel"
+                Text="Fingerprint: --"/>
+
+
+
+            <Button
+                Text="Set Active Identity"
+                Clicked="SetActive_Clicked"/>
+
 
         </VerticalStackLayout>
 
+
     </Border>
+
 
 </ContentView>

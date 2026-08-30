@@ -12,14 +12,16 @@ public class CompanionFactory
     private readonly ProfileIntegrityService integrityService;
 
 
-    public CompanionFactory()
+    public CompanionFactory(
+        IIdentityStorage storage)
     {
-        identityManager = new IdentityManager();
+        identityManager = new IdentityManager(storage);
 
         personalityManager = new PersonalityManager();
 
         integrityService = new ProfileIntegrityService();
     }
+
 
 
     public CompanionProfile Create(
