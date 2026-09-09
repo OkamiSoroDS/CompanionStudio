@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CompanionStudio.App.UI.Views.IdentityEditorPage"
+    Title="Editar identidad">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="20">
+
+            <Label
+                x:Name="EditorTitleLabel"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+
+            <BoxView HeightRequest="1"/>
+
+            <Label
+                x:Name="NameTitleLabel"
+                FontSize="20"
+                FontAttributes="Bold"/>
+
+            <Entry
+                x:Name="NameEntry"/>
+
+            <Label
+                x:Name="DescriptionTitleLabel"
+                FontSize="20"
+                FontAttributes="Bold"/>
+
+            <Editor
+                x:Name="DescriptionEditor"
+                HeightRequest="120"/>
+
+            <Label
+                x:Name="IdTitleLabel"
+                FontSize="20"
+                FontAttributes="Bold"/>
+
+            <Label
+                x:Name="IdLabel"
+                FontSize="18"/>
+
+            <Label
+                x:Name="FingerprintTitleLabel"
+                FontSize="20"
+                FontAttributes="Bold"/>
+
+            <Label
+                x:Name="FingerprintLabel"
+                FontSize="18"/>
+
+            <Button
+                x:Name="SaveButton"
+                Clicked="Save_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

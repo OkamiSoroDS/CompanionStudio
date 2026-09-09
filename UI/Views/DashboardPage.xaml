@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:CompanionStudio.App.UI.Components"
+    x:Class="CompanionStudio.App.UI.Views.DashboardPage"
+    Title="Companion Studio">
+
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem
+            x:Name="ToolbarSettings"
+            Text="⚙️"
+            Clicked="Settings_Clicked"/>
+
+    </ContentPage.ToolbarItems>
+
+
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25">
+
+
+
+            <Label
+                x:Name="AppTitleLabel"
+                Text="Companion Studio"
+                FontSize="36"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+
+
+
+            <Label
+                x:Name="AppDescriptionLabel"
+                Text="Sistema de gestión de identidades de compañeros IA"
+                FontSize="18"
+                HorizontalOptions="Center"/>
+
+
+            <!--
+<components:COSStatusCard />
+-->
+
+            <BoxView
+    HeightRequest="1"/>
+
+
+            <Label
+    Text="Memory Core Test"
+    FontSize="24"
+    FontAttributes="Bold"/>
+
+
+            <!--
+<Button
+    Text="Probar Memory"
+    Clicked="TestMemory_Clicked"/>
+-->
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+            <!-- ACTIVE IDENTITY -->
+
+            <Label
+    x:Name="ActiveIdentitySectionLabel"
+    FontSize="24"
+    FontAttributes="Bold"/>
+
+            <Border
+    x:Name="ActiveIdentityBorder"
+    Padding="15"
+    StrokeShape="RoundRectangle 15"
+    IsVisible="False">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+            x:Name="CurrentIdentityLabel"
+            FontSize="18"/>
+
+                    <Button
+            x:Name="DeactivateIdentityButton"
+            Clicked="DeactivateIdentity_Clicked"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <Label
+    x:Name="NoActiveIdentityLabel"
+    IsVisible="False"
+    FontSize="16"
+    HorizontalTextAlignment="Center"
+    TextColor="Gray"/>
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+
+            <Label
+                x:Name="CreateTitleLabel"
+                Text="Crear nuevo compañero"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+
+
+            <Entry
+                x:Name="NameEntry"
+                Placeholder="Nombre del compañero"/>
+
+
+
+            <Entry
+                x:Name="DescriptionEntry"
+                Placeholder="Descripción"/>
+
+
+
+            <Button
+                x:Name="CreateButton"
+                Text="Crear"
+                Clicked="CreateIdentity_Clicked"/>
+
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+
+            <Label
+                x:Name="CurrentIdentitiesLabel"
+                Text="Identidades actuales"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+            <SearchBar
+    x:Name="IdentitySearchBar"
+    Placeholder="Buscar identidad"
+    TextChanged="IdentitySearch_TextChanged"/>
+
+
+
+            <Label
+    x:Name="EmptyStateLabel"
+    IsVisible="False"
+    Text=""
+    FontSize="16"
+    HorizontalTextAlignment="Center"
+    TextColor="Gray"/>
+
+            <VerticalStackLayout
+    x:Name="IdentityCardsContainer"
+    Spacing="15"/>
+
+
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+
+</ContentPage>

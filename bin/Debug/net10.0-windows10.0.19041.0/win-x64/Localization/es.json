@@ -1,0 +1,76 @@
+{
+  "language_name": "Español",
+
+  "app_name": "Companion Studio",
+  "app_description": "Sistema de gestión de identidades IA",
+
+  "settings": "Configuración",
+  "language": "Idioma",
+  "select_language": "Seleccionar idioma",
+
+  "create_companion": "Crear nuevo compañero",
+  "edit_identity": "Editar identidad",
+
+  "companion_identity": "Identidad del compañero",
+
+  "name": "Nombre",
+  "description": "Descripción",
+  "version": "Versión",
+  "identity_id": "ID de identidad",
+
+  "create": "Crear identidad",
+
+  "current_identity": "Identidad actual",
+  "no_identity": "Sin identidad seleccionada",
+  "current_identities": "Identidades actuales",
+
+  "search_identities": "Buscar identidad",
+
+  "delete_identity": "Borrar identidad",
+  "save_changes": "Guardar cambios",
+  "saved": "Guardado",
+
+  "yes": "Sí",
+  "no": "No",
+  "ok": "Aceptar",
+  "error": "Error",
+
+  "status": "Estado",
+  "active": "Activa",
+  "offline": "Inactiva",
+
+  "integrity": "Integridad",
+  "core_lock": "Bloqueo del núcleo",
+  "fingerprint": "Huella digital",
+
+  "set_active": "Seleccionar identidad activa",
+
+  "delete_identity_confirmation": "¿Deseas borrar la identidad {0}?",
+  "delete_identity_irreversible": "Esta acción no se puede deshacer.",
+  "delete_last_identity_irreversible": "Esta es la última identidad. Esta acción eliminará todos sus datos.",
+  "identity_delete_error": "No se pudo eliminar la identidad.",
+  "identity_deleted": "Identidad eliminada correctamente",
+
+  "cos_title": "Sistema Núcleo del Compañero",
+  "cos_status": "Estado",
+  "cos_version": "Versión COS",
+  "cos_started": "Inicio",
+  "cos_online": "EN LÍNEA",
+  "cos_offline": "DESCONECTADO",
+  "cos_unavailable": "COS no disponible",
+
+  "security": "Seguridad",
+  "backup": "Copias de respaldo",
+
+  "appearance": "Apariencia",
+  "dark_mode": "Tema oscuro",
+
+  "coming_soon": "Próximamente",
+
+  "no_search_results": "No se encontraron resultados",
+  "no_identities_message": "No existen identidades creadas",
+  "no_other_identities": "No hay otras identidades disponibles",
+
+  "deactivate_identity": "Desactivar identidad",
+  "active_identity": "Identidad activa"
+}

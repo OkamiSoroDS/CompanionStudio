@@ -1,0 +1,76 @@
+{
+  "app_name": "Companion Studio",
+  "app_description": "AI companion identity management system",
+
+  "settings": "Settings",
+  "language": "Language",
+  "select_language": "Select language",
+
+  "create_companion": "Create new companion",
+  "companion_name": "Companion name",
+  "description": "Description",
+  "create": "Create",
+
+
+  "active_identity": "Active identity",
+  "deactivate_identity": "Deactivate identity",
+  "deactivate_identity_confirmation": "Do you want to deactivate this identity?",
+  "identity_deactivated": "Identity deactivated successfully",
+
+  "no_identities_message": "No identities created",
+  "no_other_identities": "No other identities available",
+  "no_search_results": "No results found",
+
+  "search_identities": "Search identities",
+
+  "identity_name_required": "Identity name is required",
+  "name_already_exists": "Identity name already exists",
+
+  "fingerprint": "Fingerprint",
+  "identity_id": "Identity ID",
+
+  "companion_identity": "Companion identity",
+  "name": "Name",
+  "version": "Version",
+  "identity_id": "Identity ID",
+  "status": "Status",
+  "active": "Active",
+  "offline": "Inactive",
+  "integrity": "Integrity",
+  "core_lock": "Core lock",
+  "fingerprint": "Fingerprint",
+  "set_active": "Set active identity",
+  "edit_identity": "Edit identity",
+  "delete_identity": "Delete identity",
+  "delete_identity_confirmation": "Do you want to delete identity {0}?",
+  "delete_identity_irreversible": "This action cannot be undone.",
+  "delete_last_identity_irreversible": "This is the last identity. This action will delete all its data.",
+  "identity_delete_error": "Could not delete identity.",
+  "identity_deleted": "Identity deleted successfully",
+  "yes": "Yes",
+  "no": "No",
+
+  "current_identity": "Current identity",
+  "no_identity": "No identity selected",
+  "current_identities": "Current identities",
+
+  "identity_created": "Identity created successfully",
+  "error": "Error",
+  "ok": "OK",
+
+  "edit": "Edit",
+  "delete": "Delete",
+  "share": "Share",
+
+  "save": "Save",
+  "cancel": "Cancel",
+
+  "spanish": "Español",
+  "english": "English",
+  "portuguese": "Português",
+  "french": "Français",
+  "german": "Deutsch",
+  "italian": "Italiano",
+  "japanese": "日本語",
+  "chinese": "中文"
+}

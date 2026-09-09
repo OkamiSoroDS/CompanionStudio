@@ -1,0 +1,72 @@
+[
+  {
+    "Id": "CS-000001",
+    "Name": "editor",
+    "Version": "1.0",
+    "Description": "campo vacio 0.1",
+    "CreatedAt": "2026-08-30T20:27:26.1417296Z",
+    "IsActive": false,
+    "IntegrityHash": "8570682AEA9E1517B8977D09D88937EC4FDD7AE45D9A307B42101513BBAABABC",
+    "IntegrityStatus": "Verified",
+    "IsLocked": true,
+    "CoreLocked": "LOCKED",
+    "IdentityFingerprint": "CS-BA4FDB1AE5F368206E24E494366C41D2",
+    "Fingerprint": "CS-BA4FDB1AE5F368206E24E494366C41D2"
+  },
+  {
+    "Id": "CS-000002",
+    "Name": "azuki",
+    "Version": "1.0",
+    "Description": "prueba 0.1",
+    "CreatedAt": "2026-08-30T20:27:48.9626167Z",
+    "IsActive": false,
+    "IntegrityHash": "56A4397AAC96E823BAFCA9A2425E57CF147AB70FCD0EC1006C906D451365CBAA",
+    "IntegrityStatus": "Verified",
+    "IsLocked": true,
+    "CoreLocked": "LOCKED",
+    "IdentityFingerprint": "CS-6DF194B187D6F16428BCC4B452B8EF97",
+    "Fingerprint": "CS-6DF194B187D6F16428BCC4B452B8EF97"
+  },
+  {
+    "Id": "CS-000003",
+    "Name": "britani",
+    "Version": "1.0",
+    "Description": "dfsdfgf",
+    "CreatedAt": "2026-08-30T20:57:30.0740846Z",
+    "IsActive": false,
+    "IntegrityHash": "9D4DECE8CBF6B84B3770E9AE49A987AC19DF9AEFFA74BDE4AB2DD96084C49246",
+    "IntegrityStatus": "Verified",
+    "IsLocked": true,
+    "CoreLocked": "LOCKED",
+    "IdentityFingerprint": "CS-A8BC67B932C0241D2E6EAC3E1F85E969",
+    "Fingerprint": "CS-A8BC67B932C0241D2E6EAC3E1F85E969"
+  },
+  {
+    "Id": "CS-000004",
+    "Name": "sara",
+    "Version": "1.0",
+    "Description": "asfdsfdsf",
+    "CreatedAt": "2026-08-30T20:57:39.5706824Z",
+    "IsActive": false,
+    "IntegrityHash": "92BCF09F69E2514194E1E37A3A07FD55A253632D96A4E0FD2676C538A1B13448",
+    "IntegrityStatus": "Verified",
+    "IsLocked": true,
+    "CoreLocked": "LOCKED",
+    "IdentityFingerprint": "CS-EBD30E8D4DE3B3762DB0D80D97646717",
+    "Fingerprint": "CS-EBD30E8D4DE3B3762DB0D80D97646717"
+  },
+  {
+    "Id": "CS-000005",
+    "Name": "tengo",
+    "Version": "1.0",
+    "Description": "hueva",
+    "CreatedAt": "2026-08-31T08:31:44.0476354Z",
+    "IsActive": false,
+    "IntegrityHash": "31E65DDAE5512A3752994F1FCDE9EB7755D73DBF56281A5F926400B27344BC76",
+    "IntegrityStatus": "Verified",
+    "IsLocked": true,
+    "CoreLocked": "LOCKED",
+    "IdentityFingerprint": "CS-6DD40DE40ED80B2DA8EBDAF5E2DA099E",
+    "Fingerprint": "CS-6DD40DE40ED80B2DA8EBDAF5E2DA099E"
+  }
+]

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CompanionStudio.App.UI.Views.SettingsPage"
+    Title="Configuración">
+
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25">
+
+
+            <Label
+                x:Name="SettingsTitleLabel"
+                Text="Configuración"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+            <Label
+                x:Name="LanguageTitleLabel"
+                Text="Idioma"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+
+
+            <Label
+                x:Name="CurrentLanguageLabel"
+                Text="Idioma actual: Español"
+                FontSize="18"/>
+
+
+
+            <Picker
+                x:Name="LanguagePicker"
+                Title="Seleccionar idioma"
+                SelectedIndexChanged="LanguagePicker_SelectedIndexChanged">
+
+
+                <Picker.Items>
+
+                    <x:String>Español</x:String>
+
+                    <x:String>English</x:String>
+
+                    <x:String>Português</x:String>
+
+                    <x:String>Français</x:String>
+
+                    <x:String>Deutsch</x:String>
+
+                    <x:String>Italiano</x:String>
+
+                    <x:String>日本語</x:String>
+
+                    <x:String>中文</x:String>
+
+                </Picker.Items>
+
+
+            </Picker>
+
+
+
+            <BoxView
+                HeightRequest="1"/>
+
+
+
+            <Label
+                x:Name="ComingSoonLabel"
+                Text="Próximamente"
+                FontSize="24"
+                FontAttributes="Bold"/>
+
+
+
+            <Label
+                x:Name="FutureOptionsLabel"
+                FontSize="18"/>
+
+
+
+        </VerticalStackLayout>
+
+
+    </ScrollView>
+
+
+</ContentPage>

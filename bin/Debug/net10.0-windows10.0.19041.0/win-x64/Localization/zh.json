@@ -1,0 +1,39 @@
+{
+  "language_name": "Chino mandarín",
+
+  "app_name": "Companion Studio",
+  "app_description": "人工智能身份管理系统",
+  "settings": "设置",
+  "language": "语言",
+  "select_language": "选择语言",
+  "create_companion": "创建新伙伴",
+  "edit_identity": "编辑身份",
+  "companion_identity": "伙伴身份",
+  "name": "名称",
+  "description": "描述",
+  "create": "创建身份",
+  "current_identity": "当前身份",
+  "no_identity": "未选择身份",
+  "current_identities": "当前身份列表",
+  "search_identities": "搜索身份",
+  "delete_identity": "删除身份",
+  "save_changes": "保存更改",
+  "saved": "已保存",
+  "yes": "是",
+  "no": "否",
+
+  "cos_title": "伙伴核心系统",
+  "cos_status": "状态",
+  "cos_version": "COS版本",
+  "cos_started": "启动时间",
+  "cos_online": "在线",
+  "cos_offline": "离线",
+  "cos_unavailable": "COS不可用",
+
+  "security": "安全",
+  "backup": "备份",
+  "appearance": "外观",
+  "dark_mode": "深色模式",
+
+  "coming_soon": "即将推出"
+}

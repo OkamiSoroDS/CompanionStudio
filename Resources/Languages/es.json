@@ -1,0 +1,77 @@
+{
+  "app_name": "Companion Studio",
+  "app_description": "Sistema de gestión de identidades de compañeros IA",
+
+  "settings": "Configuración",
+  "language": "Idioma",
+  "select_language": "Seleccionar idioma",
+
+  "create_companion": "Crear nuevo compañero",
+  "companion_name": "Nombre del compañero",
+  "description": "Descripción",
+  "create": "Crear",
+
+
+  "active_identity": "Identidad activa",
+  "deactivate_identity": "Desactivar identidad",
+  "deactivate_identity_confirmation": "¿Deseas desactivar esta identidad?",
+  "identity_deactivated": "Identidad desactivada correctamente",
+
+  "no_identities_message": "No hay identidades creadas",
+  "no_other_identities": "No hay otras identidades disponibles",
+  "no_search_results": "No se encontraron resultados",
+
+  "search_identities": "Buscar identidades",
+
+  "identity_name_required": "El nombre de la identidad es obligatorio",
+  "name_already_exists": "El nombre de identidad ya existe",
+
+  "fingerprint": "Huella digital",
+  "identity_id": "ID de identidad",
+
+  "companion_identity": "Identidad del compañero",
+  "name": "Nombre",
+  "version": "Versión",
+  "identity_id": "ID de identidad",
+  "status": "Estado",
+  "active": "Activa",
+  "offline": "Inactiva",
+  "integrity": "Integridad",
+  "core_lock": "Bloqueo del núcleo",
+  "fingerprint": "Huella digital",
+  "set_active": "Seleccionar identidad activa",
+  "edit_identity": "Editar identidad",
+  "delete_identity": "Borrar identidad",
+  "delete_identity_confirmation": "¿Deseas borrar la identidad {0}?",
+  "delete_identity_irreversible": "Esta acción no se puede deshacer.",
+  "delete_last_identity_irreversible": "Esta es la última identidad. Esta acción eliminará todos sus datos.",
+  "identity_delete_error": "No se pudo eliminar la identidad.",
+  "identity_deleted": "Identidad eliminada correctamente",
+  "yes": "Sí",
+  "no": "No",
+
+
+  "current_identity": "Identidad actual",
+  "no_identity": "Sin identidad seleccionada",
+  "current_identities": "Identidades actuales",
+
+  "identity_created": "Identidad creada correctamente",
+  "error": "Error",
+  "ok": "Aceptar",
+
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "share": "Compartir",
+
+  "save": "Guardar",
+  "cancel": "Cancelar",
+
+  "spanish": "Español",
+  "english": "English",
+  "portuguese": "Português",
+  "french": "Français",
+  "german": "Deutsch",
+  "italian": "Italiano",
+  "japanese": "日本語",
+  "chinese": "中文"
+}

@@ -1,0 +1,114 @@
+﻿using CompanionStudio.Core.COS;
+using CompanionStudio.Core.Services;
+
+namespace CompanionStudio.App.UI.Components;
+
+public partial class COSStatusCard : ContentView
+{
+    private COSStatus? status;
+
+    private TranslationService? translation;
+
+    private LanguageService? language;
+
+
+    public COSStatusCard()
+    {
+        InitializeComponent();
+
+        Loaded += OnLoaded;
+    }
+
+
+    private void OnLoaded(
+        object? sender,
+        EventArgs e)
+    {
+        var services =
+            Application.Current?
+            .Handler?
+            .MauiContext?
+            .Services;
+
+        if (services == null)
+            return;
+
+
+        status =
+            services.GetService<COSStatus>();
+
+        translation =
+            services.GetService<TranslationService>();
+
+        language =
+            services.GetService<LanguageService>();
+
+
+        if (language != null)
+        {
+            language.LanguageChanged -= LanguageChanged;
+            language.LanguageChanged += LanguageChanged;
+        }
+
+
+        LoadStatus();
+    }
+
+
+    private void LanguageChanged(
+        object? sender,
+        EventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(
+            LoadStatus);
+    }
+
+
+    private void LoadStatus()
+    {
+        if (status == null || translation == null)
+        {
+            StatusLabel.Text =
+                "COS unavailable";
+
+            return;
+        }
+
+        TitleLabel.Text =
+            translation.Get("cos_title");
+
+        var result =
+            status.GetStatus();
+
+        foreach (var module in status.GetModules())
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"{module.Name}: {module.IsReady}");
+        }
+
+        StatusLabel.Text =
+            $"{translation.Get("cos_status")}: " +
+            $"{(result.Online
+                ? translation.Get("cos_online")
+                : translation.Get("cos_offline"))}";
+
+        VersionLabel.Text =
+            $"{translation.Get("cos_version")}: " +
+            $"{result.Version}";
+
+        StartLabel.Text =
+            $"{translation.Get("cos_started")}: " +
+            $"{result.StartedAt}";
+    }
+
+
+    protected override void OnParentSet()
+    {
+        base.OnParentSet();
+
+        if (Parent == null && language != null)
+        {
+            language.LanguageChanged -= LanguageChanged;
+        }
+    }
+}
